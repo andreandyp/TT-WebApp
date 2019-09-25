@@ -102,7 +102,7 @@ async function buscarPorID(datos, done) {
         const [resultados] = await Administrator.findAll({
             attributes: ["idAdministrator", "username"],
             where: {
-                idProvider: datos._id,
+                idAdministrator: datos._id,
             },
             raw: true,
         });
