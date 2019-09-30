@@ -5,13 +5,13 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var passport = require("passport");
 var session = require("express-session");
-var flash = require("express-flash");
 var html = require("ejs").renderFile;
 
 require("dotenv").config();
 require("./config/passport-init")(passport);
 
 var authRouter = require("./routes/auth")(passport);
+var providerRouter = require("./routes/proveedor");
 
 var app = express();
 
@@ -24,7 +24,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(flash());
 app.use(
     session({
         cookie: { maxAge: 1000 * 60 * 60 }, //1 día
@@ -38,6 +37,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/auth", authRouter);
+app.use("/proveedor", providerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -39,7 +39,6 @@ async function iniciarAdmin(req, usuario, contraseña, done) {
 
         done(null, { _id, username, role: "admin" });
     } catch (error) {
-        console.log(error);
         done(error, false);
     }
 }
@@ -80,7 +79,6 @@ async function iniciarProveedor(req, usuario, contraseña, done) {
 
         done(null, { _id, username, role: "provider" });
     } catch (error) {
-        console.log(error);
         done(error, false);
     }
 }
@@ -115,10 +113,6 @@ async function buscarPorID(datos, done) {
 
 function validarClave(contraseña, hash) {
     return bcrypt.compareSync(contraseña, hash);
-}
-
-function crearHash(contraseña) {
-    return bcrypt.hashSync(contraseña, bcrypt.genSaltSync(10), null);
 }
 
 module.exports = {

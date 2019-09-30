@@ -25,6 +25,10 @@ function init(sequelize, Sequelize) {
             socialNetwork: {
                 type: Sequelize.STRING,
             },
+            Administrator_idAdministrator: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
