@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const {
-    añadirProveedor,
-    obtenerProveedores,
-    obtenerTodosProveedores,
-    eliminarProveedor,
+    obtenerModelo,
+    obtenerModelos,
+    añadirModelo,
+    eliminarModelo,
 } = require("../database/ModelDAO");
 
 router.use((req, res, next) => {
@@ -19,35 +19,30 @@ router.use((req, res, next) => {
     return next();
 });
 
-router.get("/",  async (req, res) => {
-    const resultado = await obtenerTodosProveedores();
+router.get("/", async (req, res) => {
+    const resultado = await obtenerModelos(req.user.idProvider);
     res.status(resultado.status).send(resultado.mensaje);
 });
 
-router.get("/:idModel",  async (req, res) => {
-    const resultado = await obtenerProveedores(req.params.idProvider);
+router.get("/:idModel", async (req, res) => {
+    const resultado = await obtenerModelo(
+        req.params.idModel,
+        req.user.idProvider
+    );
     res.status(resultado.status).send(resultado.mensaje);
 });
 
-router.post("/",  async (req, res) => {
-    const { username, password, name } = req.body;
-    if (!username || !password || !name) {
-        return res.status(200).send("Faltan datos");
-    }
-
-    const { idAdministrator } = req.user;
-    const resultado = await añadirProveedor({
-        username,
-        password,
-        name,
-        idAdministrator,
-    });
+router.post("/", async (req, res) => {
+    const resultado = await añadirModelo(req.body, req.user.idProvider);
 
     res.status(resultado.status).send(resultado.mensaje);
 });
 
-router.delete("/",  async (req, res) => {
-    const resultado = await eliminarProveedor(req.body.idProvider);
+router.delete("/:idModel", async (req, res) => {
+    const resultado = await eliminarModelo(
+        req.params.idModel,
+        req.user.idProvider
+    );
     return res.status(resultado.status).send(resultado.mensaje);
 });
 

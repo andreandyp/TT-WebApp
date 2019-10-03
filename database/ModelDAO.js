@@ -1,92 +1,127 @@
-const { Model, Color } = require("../config/db");
+const { Model, Color, ModelHasColor } = require("../config/db");
 
-async function obtenerModelo() {
+async function obtenerModelo(idModel, idProvider) {
     try {
-        const proveedores = await Provider.findAll({
+        const [modelo] = await Model.findAll({
             attributes: [
-                "idProvider",
-                "username",
+                "idModel",
                 "name",
-                "phone",
-                "email",
-                "Administrator_idAdministrator",
-            ],
-            raw: true,
-        });
-
-        return { status: 200, mensaje: proveedores };
-    } catch (error) {
-        return { status: 500, mensaje: error };
-    }
-}
-
-async function obtenerModelos(idAdministrator) {
-    try {
-        const proveedores = await Provider.findAll({
-            attributes: [
-                "idProvider",
-                "username",
-                "name",
-                "phone",
-                "email",
-                "Administrator_idAdministrator",
+                "type",
+                "style",
+                "category",
+                "fileAR",
+                "price",
+                "description",
+                "file2D",
             ],
             where: {
-                Administrator_idAdministrator: idAdministrator,
+                idModel,
+                Provider_idProvider: idProvider,
             },
             raw: true,
         });
 
-        return { status: 200, mensaje: proveedores };
-    } catch (error) {
-        return { status: 500, mensaje: error };
-    }
-}
-
-async function añadirModelo({ username, password, name, idAdministrator }) {
-    try {
-        const [proveedor] = await Provider.findAll({
-            attributes: ["username"],
-            where: {
-                username,
-            },
-            raw: true,
-        });
-
-        if (proveedor) {
-            return { status: 400, mensaje: "El proveedor ya existe" };
+        if (!modelo) {
+            return { status: 400, mensaje: "El modelo no existe" };
         }
 
-        const { idProvider } = await Provider.create({
-            username,
-            password: crearHash(password),
+        return { status: 200, mensaje: modelo };
+    } catch (error) {
+        return { status: 500, mensaje: error };
+    }
+}
+
+async function obtenerModelos(idProvider) {
+    try {
+        const modelos = await Model.findAll({
+            attributes: [
+                "idModel",
+                "name",
+                "type",
+                "style",
+                "category",
+                "fileAR",
+                "price",
+                "description",
+                "file2D",
+            ],
+            where: {
+                Provider_idProvider: idProvider,
+            },
+            raw: true,
+        });
+
+        return { status: 200, mensaje: modelos };
+    } catch (error) {
+        return { status: 500, mensaje: error };
+    }
+}
+
+async function añadirModelo(datosModelo, idProvider) {
+    const { name, type, style, category, price, description } = datosModelo;
+
+    // Oh Dios mío...
+    if (!name || !type || !style || !category || !price || !description) {
+        return { status: 400, mensaje: "Faltan datos del modelo" };
+    }
+
+    const { nameColor, rgbCode } = datosModelo;
+    if (!nameColor || !rgbCode) {
+        return { status: 400, mensaje: "Faltan datos del color" };
+    }
+
+    try {
+        const nuevoModelo = await Model.create({
             name,
-            Administrator_idAdministrator: idAdministrator,
+            type,
+            style,
+            category,
+            price,
+            description,
+            Provider_idProvider: idProvider,
+        });
+
+        const nuevoColor = await Color.create({
+            name: nameColor,
+            rgbCode,
+        });
+
+        await ModelHasColor.create({
+            Model_idModel: nuevoModelo.idModel,
+            Color_idColor: nuevoColor.idColor,
         });
 
         return {
             status: 200,
-            mensaje: {
-                username,
-                name,
-                Administrator_idAdministrator: idAdministrator,
-                idProvider,
-            },
+            mensaje: "Modelo creado",
         };
     } catch (error) {
+        console.log(error);
         return { status: 500, mensaje: error };
     }
 }
 
-async function eliminarModelo(idProvider) {
+async function eliminarModelo(idModel, idProvider) {
     try {
-        await Provider.destroy({
+        const [modeloAEliminar] = await Model.findAll({
             where: {
-                idProvider,
+                idModel,
+            },
+            raw: true,
+        });
+
+        if (modeloAEliminar.Provider_idProvider !== idProvider) {
+            return { status: 400, mensaje: "Este modelo no es tuyo" };
+        }
+
+        await Model.destroy({
+            where: {
+                idModel,
+                Provider_idProvider: idProvider,
             },
         });
 
-        return { status: 200, mensaje: "Proveedor eliminado" };
+        return { status: 200, mensaje: "Modelo eliminado" };
     } catch (error) {
         return { status: 500, mensaje: error };
     }
@@ -96,5 +131,5 @@ module.exports = {
     obtenerModelo,
     obtenerModelos,
     añadirModelo,
-    eliminarModelo
+    eliminarModelo,
 };

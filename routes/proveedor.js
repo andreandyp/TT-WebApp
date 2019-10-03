@@ -50,8 +50,8 @@ router.post("/", esAdmin, async (req, res) => {
     res.status(resultado.status).send(resultado.mensaje);
 });
 
-router.delete("/", esAdmin, async (req, res) => {
-    const resultado = await eliminarProveedor(req.body.idProvider);
+router.delete("/:idProvider", esAdmin, async (req, res) => {
+    const resultado = await eliminarProveedor(req.params.idProvider);
     return res.status(resultado.status).send(resultado.mensaje);
 });
 

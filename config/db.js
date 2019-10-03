@@ -3,6 +3,7 @@ const AdministratorModel = require("../models/Administrator");
 const ProviderModel = require("../models/Proveedor");
 const ModelModel = require("../models/Model");
 const ColorModel = require("../models/Color");
+const ModelHasColorModel = require("../models/ModelHasColor");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
@@ -12,6 +13,7 @@ const Administrator = AdministratorModel(sequelize, Sequelize);
 const Provider = ProviderModel(sequelize, Sequelize);
 const Model = ModelModel(sequelize, Sequelize);
 const Color = ColorModel(sequelize, Sequelize);
+const ModelHasColor = ModelHasColorModel(sequelize, Sequelize);
 
 Administrator.hasMany(Provider, {
     foreignKey: "Administrator_idAdministrator",
@@ -46,4 +48,5 @@ module.exports = {
     Provider,
     Model,
     Color,
+    ModelHasColor,
 };

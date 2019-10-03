@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", viewsRouter);
 app.use("/auth", authRouter);
 app.use("/proveedor", providerRouter);
-app.use("/models", modelRouter);
+app.use("/modelos", modelRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

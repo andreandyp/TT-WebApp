@@ -35,7 +35,7 @@ function init(sequelize, Sequelize) {
                 type: Sequelize.STRING,
             },
         },
-        { sequelize, timestamps: false, freezeTableName: true }
+        { sequelize, freezeTableName: true }
     );
 }
 
