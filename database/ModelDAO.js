@@ -1,4 +1,5 @@
 const { Model, Color, ModelHasColor } = require("../config/db");
+const firebase = require("../config/firebase");
 
 async function obtenerModelo(idModel, idProvider) {
     try {
@@ -57,10 +58,9 @@ async function obtenerModelos(idProvider) {
     }
 }
 
-async function añadirModelo(datosModelo, idProvider) {
+async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
     const { name, type, style, category, price, description } = datosModelo;
 
-    // Oh Dios mío...
     if (!name || !type || !style || !category || !price || !description) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
@@ -71,25 +71,66 @@ async function añadirModelo(datosModelo, idProvider) {
     }
 
     try {
-        const nuevoModelo = await Model.create({
-            name,
-            type,
-            style,
-            category,
-            price,
-            description,
-            Provider_idProvider: idProvider,
+        const [nuevoModelo, nuevoColor] = await Promise.all([
+            Model.create({
+                name,
+                type,
+                style,
+                category,
+                price,
+                description,
+                Provider_idProvider: idProvider,
+            }),
+            Color.create({
+                name: nameColor,
+                rgbCode,
+            }),
+        ]);
+
+        const { idModel } = nuevoModelo;
+
+        const {
+            originalname: original3d,
+            path: path3d,
+            mimetype: mime3d,
+        } = modelo3d;
+
+        const {
+            originalname: original2d,
+            path: path2d,
+            mimetype: mime2d,
+        } = modelo2d;
+
+        const ref3d = `${idProvider}/${idModel}-${original3d}`;
+        const ref2d = `${idProvider}/${idModel}-${original2d}`;
+
+        const firebase3d = firebase.bucket().upload(path3d, {
+            destination: ref3d,
+            metadata: {
+                contentType: mime3d,
+            },
         });
 
-        const nuevoColor = await Color.create({
-            name: nameColor,
-            rgbCode,
+        const firebase2d = firebase.bucket().upload(path2d, {
+            destination: ref2d,
+            metadata: {
+                contentType: mime2d,
+            },
         });
 
-        await ModelHasColor.create({
-            Model_idModel: nuevoModelo.idModel,
-            Color_idColor: nuevoColor.idColor,
-        });
+        await Promise.all([firebase3d, firebase2d]);
+
+        await Promise.all([
+            nuevoModelo.update({
+                fileAR: ref3d,
+                file2D: ref2d,
+            }),
+
+            ModelHasColor.create({
+                Model_idModel: idModel,
+                Color_idColor: nuevoColor.idColor,
+            }),
+        ]);
 
         return {
             status: 200,

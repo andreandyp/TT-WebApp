@@ -1,5 +1,9 @@
 var express = require("express");
+var multer = require("multer");
+
 var router = express.Router();
+var upload = multer({ dest: "/uploads/" });
+
 const {
     obtenerModelo,
     obtenerModelos,
@@ -32,11 +36,32 @@ router.get("/:idModel", async (req, res) => {
     res.status(resultado.status).send(resultado.mensaje);
 });
 
-router.post("/", async (req, res) => {
-    const resultado = await añadirModelo(req.body, req.user.idProvider);
+router.post(
+    "/",
+    upload.fields([
+        { name: "modelo3d", maxCount: 1 },
+        { name: "modelo2d", maxCount: 1 },
+    ]),
+    async (req, res) => {
+        const { modelo3d, modelo2d } = req.files;
+        if (!modelo3d) {
+            return res.status(400).send("Falta el modelo en 3D");
+        }
 
-    res.status(resultado.status).send(resultado.mensaje);
-});
+        if (!modelo2d) {
+            return res.status(400).send("Falta la imagen del modelo");
+        }
+
+        const resultado = await añadirModelo(
+            req.body,
+            req.user.idProvider,
+            modelo3d[0],
+            modelo2d[0]
+        );
+
+        res.status(resultado.status).send(resultado.mensaje);
+    }
+);
 
 router.delete("/:idModel", async (req, res) => {
     const resultado = await eliminarModelo(

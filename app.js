@@ -9,6 +9,7 @@ var html = require("ejs").renderFile;
 
 require("dotenv").config();
 require("./config/passport-init")(passport);
+require("./config/firebase").conectar();
 
 var authRouter = require("./routes/auth")(passport);
 var providerRouter = require("./routes/proveedor");
