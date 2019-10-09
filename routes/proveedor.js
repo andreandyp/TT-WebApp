@@ -7,6 +7,11 @@ const {
     eliminarProveedor,
 } = require("../database/AdminDAO");
 
+const {
+    actualizarInfoProveedor,
+    corregirInfoProveedor,
+} = require("../database/ProviderDAO");
+
 router.use((req, res, next) => {
     if (!req.isAuthenticated()) {
         return res.status(401).send("No has iniciado sesión");
@@ -17,6 +22,14 @@ router.use((req, res, next) => {
 
 const esAdmin = (req, res, next) => {
     if (req.user.role !== "admin") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    return next();
+};
+
+const esProveedor = (req, res, next) => {
+    if (req.user.role !== "provider") {
         return res.status(401).send("No puedes entrar aquí");
     }
 
@@ -48,6 +61,24 @@ router.post("/", esAdmin, async (req, res) => {
     });
 
     res.status(resultado.status).send(resultado.mensaje);
+});
+
+router.put("/", esProveedor, async (req, res) => {
+    const resultado = await actualizarInfoProveedor(
+        req.body,
+        req.user.idProvider
+    );
+
+    return res.status(resultado.status).send(resultado.mensaje);
+});
+
+router.patch("/", esProveedor, async (req, res) => {
+    const resultado = await corregirInfoProveedor(
+        req.body,
+        req.user.idProvider
+    );
+
+    return res.status(resultado.status).send(resultado.mensaje);
 });
 
 router.delete("/:idProvider", esAdmin, async (req, res) => {

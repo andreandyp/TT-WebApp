@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    return sequelize.define(
+    const Proveedor = sequelize.define(
         "provider",
         {
             idProvider: {
@@ -22,7 +22,22 @@ function init(sequelize, Sequelize) {
             email: {
                 type: Sequelize.STRING,
             },
-            socialNetwork: {
+            rfc: {
+                type: Sequelize.STRING,
+            },
+            razonSocial: {
+                type: Sequelize.STRING,
+            },
+            direccion: {
+                type: Sequelize.STRING,
+            },
+            tipo: {
+                type: Sequelize.STRING,
+            },
+            persona: {
+                type: Sequelize.STRING,
+            },
+            categoria: {
                 type: Sequelize.STRING,
             },
             Administrator_idAdministrator: {
@@ -32,6 +47,8 @@ function init(sequelize, Sequelize) {
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
+
+    return Proveedor;
 }
 
 module.exports = init;

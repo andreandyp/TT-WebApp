@@ -4,6 +4,7 @@ const ProviderModel = require("../models/Proveedor");
 const ModelModel = require("../models/Model");
 const ColorModel = require("../models/Color");
 const ModelHasColorModel = require("../models/ModelHasColor");
+const SocialNetworkModel = require("../models/SocialNetworks");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
@@ -14,6 +15,7 @@ const Provider = ProviderModel(sequelize, Sequelize);
 const Model = ModelModel(sequelize, Sequelize);
 const Color = ColorModel(sequelize, Sequelize);
 const ModelHasColor = ModelHasColorModel(sequelize, Sequelize);
+const SocialNetwork = SocialNetworkModel(sequelize, Sequelize);
 
 Administrator.hasMany(Provider, {
     foreignKey: "Administrator_idAdministrator",
@@ -43,10 +45,16 @@ Color.associate = models => {
     });
 };
 
+Provider.hasMany(SocialNetwork, {
+    foreignKey: "Provider_idProvider",
+    sourceKey: "idProvider",
+});
+
 module.exports = {
     Administrator,
     Provider,
     Model,
     Color,
     ModelHasColor,
+    SocialNetwork,
 };
