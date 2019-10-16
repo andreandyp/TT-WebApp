@@ -2,7 +2,7 @@ var express = require("express");
 var multer = require("multer");
 
 var router = express.Router();
-var upload = multer({ dest: "/uploads/" });
+var upload = multer({ storage: multer.memoryStorage() });
 
 const {
     obtenerModelo,

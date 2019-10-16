@@ -89,36 +89,10 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
 
         const { idModel } = nuevoModelo;
 
-        const {
-            originalname: original3d,
-            path: path3d,
-            mimetype: mime3d,
-        } = modelo3d;
+        const ref3dFB = subirAFirebase(modelo3d, idProvider, idModel);
+        const ref2dFB = subirAFirebase(modelo2d, idProvider, idModel);
 
-        const {
-            originalname: original2d,
-            path: path2d,
-            mimetype: mime2d,
-        } = modelo2d;
-
-        const ref3d = `${idProvider}/${idModel}/${original3d}`;
-        const ref2d = `${idProvider}/${idModel}/${original2d}`;
-
-        const firebase3d = firebase.bucket().upload(path3d, {
-            destination: ref3d,
-            metadata: {
-                contentType: mime3d,
-            },
-        });
-
-        const firebase2d = firebase.bucket().upload(path2d, {
-            destination: ref2d,
-            metadata: {
-                contentType: mime2d,
-            },
-        });
-
-        await Promise.all([firebase3d, firebase2d]);
+        const [ref3d, ref2d] = await Promise.all([ref3dFB, ref2dFB]);
 
         await Promise.all([
             nuevoModelo.update({
@@ -165,6 +139,29 @@ async function eliminarModelo(idModel, idProvider) {
     } catch (error) {
         return { status: 500, mensaje: error };
     }
+}
+
+function subirAFirebase(modelo, idProvider, idModel) {
+    return new Promise((resolve, reject) => {
+        const { originalname, mimetype } = modelo;
+
+        const refModelo = `${idProvider}/${idModel}/${originalname}`;
+        const refFB = firebase.bucket().file(refModelo);
+
+        const blobStream = refFB.createWriteStream({
+            metadata: {
+                contentType: mimetype,
+            },
+        });
+
+        blobStream.on("error", reject);
+
+        blobStream.on("finish", () => {
+            resolve(refModelo);
+        });
+
+        blobStream.end(modelo.buffer);
+    });
 }
 
 module.exports = {
