@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    return sequelize.define(
+    const Administrator = sequelize.define(
         "administrator",
         {
             idAdministrator: {
@@ -16,6 +16,8 @@ function init(sequelize, Sequelize) {
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
+
+    return Administrator;
 }
 
 module.exports = init;

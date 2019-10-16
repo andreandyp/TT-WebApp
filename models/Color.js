@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    return sequelize.define(
+    const Color = sequelize.define(
         "color",
         {
             idColor: {
@@ -16,6 +16,8 @@ function init(sequelize, Sequelize) {
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
+
+    return Color;
 }
 
 module.exports = init;

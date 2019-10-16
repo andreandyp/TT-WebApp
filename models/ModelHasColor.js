@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    return sequelize.define(
+    const ModelHasColor = sequelize.define(
         "model_has_color",
         {
             idModelColor: {
@@ -9,13 +9,17 @@ function init(sequelize, Sequelize) {
             },
             Model_idModel: {
                 type: Sequelize.INTEGER,
+                allowNull: false,
             },
             Color_idColor: {
                 type: Sequelize.INTEGER,
+                allowNull: false,
             },
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
+
+    return ModelHasColor;
 }
 
 module.exports = init;

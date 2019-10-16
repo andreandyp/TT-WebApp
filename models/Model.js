@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    return sequelize.define(
+    const Model = sequelize.define(
         "model",
         {
             idModel: {
@@ -30,6 +30,7 @@ function init(sequelize, Sequelize) {
             },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
+                allowNull: false,
             },
             file2D: {
                 type: Sequelize.STRING,
@@ -37,6 +38,8 @@ function init(sequelize, Sequelize) {
         },
         { sequelize, freezeTableName: true }
     );
+
+    return Model;
 }
 
 module.exports = init;

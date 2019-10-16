@@ -1,5 +1,5 @@
 function init(sequelize, Sequelize) {
-    const Proveedor = sequelize.define(
+    const Provider = sequelize.define(
         "provider",
         {
             idProvider: {
@@ -48,7 +48,7 @@ function init(sequelize, Sequelize) {
         { sequelize, timestamps: false, freezeTableName: true }
     );
 
-    return Proveedor;
+    return Provider;
 }
 
 module.exports = init;

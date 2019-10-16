@@ -15,6 +15,7 @@ var authRouter = require("./routes/auth")(passport);
 var providerRouter = require("./routes/proveedor");
 var modelRouter = require("./routes/modelos");
 var viewsRouter = require("./routes/index");
+var apiRouter = require("./routes/api");
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use("/", viewsRouter);
 app.use("/auth", authRouter);
 app.use("/proveedor", providerRouter);
 app.use("/modelos", modelRouter);
+app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

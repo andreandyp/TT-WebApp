@@ -1,23 +1,22 @@
 const bcrypt = require("bcrypt-nodejs");
 
-const { Provider } = require("../config/db");
+const { Provider, Administrator } = require("../config/db");
 
 async function obtenerTodosProveedores() {
     try {
         const proveedores = await Provider.findAll({
-            attributes: [
-                "idProvider",
-                "username",
-                "name",
-                "phone",
-                "email",
-                "Administrator_idAdministrator",
+            attributes: ["idProvider", "username", "name", "phone", "email"],
+            include: [
+                {
+                    model: Administrator,
+                    attributes: ["idAdministrator", "username"],
+                },
             ],
-            raw: true,
         });
 
         return { status: 200, mensaje: proveedores };
     } catch (error) {
+        console.log(error);
         return { status: 500, mensaje: error };
     }
 }
