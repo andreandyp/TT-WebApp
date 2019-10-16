@@ -16,7 +16,6 @@ async function obtenerTodosProveedores() {
 
         return { status: 200, mensaje: proveedores };
     } catch (error) {
-        console.log(error);
         return { status: 500, mensaje: error };
     }
 }

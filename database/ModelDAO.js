@@ -101,8 +101,8 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             mimetype: mime2d,
         } = modelo2d;
 
-        const ref3d = `${idProvider}/${idModel}-${original3d}`;
-        const ref2d = `${idProvider}/${idModel}-${original2d}`;
+        const ref3d = `${idProvider}/${idModel}/${original3d}`;
+        const ref2d = `${idProvider}/${idModel}/${original2d}`;
 
         const firebase3d = firebase.bucket().upload(path3d, {
             destination: ref3d,
@@ -137,7 +137,6 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             mensaje: "Modelo creado",
         };
     } catch (error) {
-        console.log(error);
         return { status: 500, mensaje: error };
     }
 }
