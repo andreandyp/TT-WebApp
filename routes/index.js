@@ -1,10 +1,6 @@
 var express = require("express");
 var router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("index.html");
-});
-
 router.get("/inicio_admin", (req, res) => {
     res.render("inicio_admin.html");
 });
@@ -27,6 +23,10 @@ router.get("/formproveedor", (req, res) => {
     }
 
     res.render("formproveedor.html");
+});
+
+router.get("/", (req, res) => {
+    res.render("index.html");
 });
 
 module.exports = router;

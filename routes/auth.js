@@ -3,6 +3,10 @@ const router = express.Router();
 
 module.exports = passport => {
     router.post("/loginAdmin", (req, res) => {
+        if (!req.body.usuario || !req.body.contraseña) {
+            return res.status(400).send("Faltan datos");
+        }
+
         passport.authenticate("iniciarAdmin", (error, usuario) => {
             if (error) {
                 return res
@@ -15,6 +19,9 @@ module.exports = passport => {
     });
 
     router.post("/loginProvider", (req, res) => {
+        if (!req.body.usuario || !req.body.contraseña) {
+            return res.status(400).send("Faltan datos");
+        }
         passport.authenticate("iniciarProveedor", (error, usuario) => {
             if (error) {
                 return res

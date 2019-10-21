@@ -90,7 +90,7 @@
         <!-- / .container -->
     </section>
 
-   <!--Formulario-->
+  
 
   <body class="bg-light">
     <div class="container">
@@ -100,143 +100,38 @@
         <p class="lead">Para dar de alta a algún proveedor llena los siguientes campos</p>
       </div>
 
-      <div class="row">
-        <!--
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
-            </li>
-          </ul>
+ <!--Formulario-->
 
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
-              </div>
-            </div>
-          </form>
-        </div> -->
-        <div class="col-md-10 order-md-1">
-          <h4 class="mb-3">Razón social</h4>
-          <form class="needs-validation" novalidate>
+      <div class="row">
+        <div class="col-md-6 order-md-1 mx-auto">
+          <form class="needs-validation">
             <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="firstName">¿Cuál es la razón social del proveedor?</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+              <div class="col-md-8 mb-3   ">
+                <div class="mb-3">
+                <label for="asignarusuario">Nombre</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Nombre" value="" required>
                 <div class="invalid-feedback">
-                  Valid first name is required.
+                  Es necesario asignar un usuario
                 </div>
               </div>
-            </div>
+                <div class="mb-3">
+                <label for="asignarusuario">Usuario</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Usuario" value="" required>
+                <div class="invalid-feedback">
+                  Es necesario asignar un usuario
+                </div>
+              </div>
+           
 
 
             <div class="mb-3">
-              <label for="RFC">RFC <span class="text-muted"></span></label>
-              <input type="" class="form-control" id="RFC" placeholder="" value="" required="">
+              <label for="contraseña">Contraseña <span class="text-muted"></span></label>
+              <input type="" class="form-control" id="contraseña" placeholder="*******" value="" required="">
               <div class="invalid-feedback">
                 Ingresa un RFC válido
               </div>
             </div>
-
-            <div class="mb-3">
-              <label for="address">Dirección</label>
-              <input type="text" class="form-control" id="address" placeholder="" required>
-              <div class="invalid-feedback">
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="proveedor">Tipo de proveedor</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Elige</option>
-                  <option>Iluminación</option>
-                  <option>Piso</option>
-                  <option>Muebles</option>
-                  <option>Pintura</option>
-                  <option>Decoración</option>
-                </select>
-                <div class="invalid-feedback">
-                  Elige una opción
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="persona">Persona</label>
-                <select class="custom-select d-block w-100" id="state" required>
-                  <option value="">Elige</option>
-                  <option>Física</option>
-                  <option>Moral</option>
-                </select>
-                <div class="invalid-feedback">
-                    Elige una de las opciones
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="presupuesto">Categoría de presupuesto</label>
-                <select class="custom-select d-block w-100" id="presupuesto" required>
-                  <option value="">Elige</option>
-                  <option>Bajo</option>
-                  <option>Medio</option>
-                  <option>Alto</option>
-                </select>
-                <div class="invalid-feedback">
-                    Elige una de las opciones
-                </div>
-              </div>
-            </div>
-            <hr class="mb-4">
-            <h4 class="mb-3">Métodos de pago (Cómo pueden pagar tus clientes)</h4>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjeta">
-              <label class="custom-control-label" for="tarjeta">Tarjeta de crédito</label>
-            </div>
-             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjeta">
-              <label class="custom-control-label" for="tarjeta">Tarjeta de débito</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="contado">
-              <label class="custom-control-label" for="contado">Contado</label>
-            </div>
-            <hr class="mb-4">
-
-            
-            
+          </div>
             <hr class="mb-4">
             <input name="submit" type="submit" class="btn btn-outline-dark btn-lg btn-block" value="Enviar">
             <hr class="mb-4">
