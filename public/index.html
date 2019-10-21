@@ -294,5 +294,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script>
+        $(document).ready(async () => {
+            try {
+                const { data } = await axios.get("/auth/activo");
+                if(data.role === "admin") {
+                    return window.location.replace("/formadministrador");
+                }
+                if(data.role === "provider") {
+                    return window.location.replace("/formproveedor");
+                }
+            } catch (error) {
+            }
+        })
+    </script>
   </body>
 </html>

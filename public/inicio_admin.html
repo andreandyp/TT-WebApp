@@ -36,7 +36,7 @@
                 <!-- Links -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="AXdecor.html">
+                        <a class="nav-link js-scroll-trigger" href="/">
                          Inicio
                         </a>
                     </li>
@@ -121,21 +121,6 @@
     <script src="js/theme.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script>
-        document.querySelector(".form-signin").addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const data = {
-                usuario: document.querySelector("#inputuser").value,
-                contraseña: document.querySelector("#inputPassword").value
-            }
-
-            try {
-                const respuesta = await axios.post("/auth/loginAdmin", data)
-                window.location.replace("/formadministrador");
-            } catch (error) {
-                alert(error.response.data);
-            }
-        });
-    </script>
+    <script src="/js/scripts/inicio_admin.js"></script>
   </body>
 </html>

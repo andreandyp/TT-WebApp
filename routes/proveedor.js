@@ -29,7 +29,7 @@ router.get("/:idProvider", esAdmin, async (req, res) => {
 router.post("/", esAdmin, async (req, res) => {
     const { username, password, name } = req.body;
     if (!username || !password || !name) {
-        return res.status(200).send("Faltan datos");
+        return res.status(400).send("Faltan datos");
     }
 
     const { idAdministrator } = req.user;

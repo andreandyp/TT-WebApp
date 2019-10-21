@@ -9,6 +9,18 @@ router.get("/inicio_proveedor", (req, res) => {
     res.render("inicio_proveedor.html");
 });
 
+router.get("/proveedores", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "admin") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("proveedores.html");
+});
+
 router.get("/formadministrador", (req, res) => {
     if (!req.isAuthenticated()) {
         return res.redirect("/");
