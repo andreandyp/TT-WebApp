@@ -5,7 +5,7 @@ const { Provider, Administrator } = require("../config/db");
 async function obtenerTodosProveedores() {
     try {
         const proveedores = await Provider.findAll({
-            attributes: ["idProvider", "username", "name", "phone", "email"],
+            attributes: ["idProvider", "username", "name"],
             include: [
                 {
                     model: Administrator,
@@ -27,8 +27,6 @@ async function obtenerProveedores(idAdministrator) {
                 "idProvider",
                 "username",
                 "name",
-                "phone",
-                "email",
                 "Administrator_idAdministrator",
             ],
             where: {

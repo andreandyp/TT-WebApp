@@ -1,4 +1,4 @@
-const { Provider, SocialNetwork } = require("../config/db");
+const { Provider, SocialNetwork, Store } = require("../config/db");
 
 async function actualizarInfoProveedor(infoProveedor, idProvider) {
     try {
@@ -11,7 +11,8 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             tipo,
             persona,
             categoria,
-            socialNetworks,
+            socialNetworks = [],
+            stores = [],
         } = infoProveedor;
 
         await Provider.update(
@@ -32,43 +33,25 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             }
         );
 
-        socialNetworks.forEach(async url => {
-            await SocialNetwork.create({
-                socialNetworkUrl: url,
-                Provider_idProvider: idProvider,
-            });
-        });
+        const redesSociales = socialNetworks.map(red => ({
+            socialNetworkUrl: red,
+            Provider_idProvider: idProvider,
+        }));
 
-        const [proveedor] = await Provider.findAll({
-            attributes: [
-                "username",
-                "phone",
-                "email",
-                "rfc",
-                "razonSocial",
-                "direccion",
-                "tipo",
-                "persona",
-                "categoria",
-            ],
-            where: {
-                idProvider,
-            },
-            include: [
-                {
-                    model: SocialNetwork,
-                    as: "socialnetworks",
-                    attributes: ["idSocialNetwork", "socialNetworkUrl"],
-                    where: {
-                        Provider_idProvider: idProvider,
-                    },
-                },
-            ],
-        });
+        await SocialNetwork.bulkCreate(redesSociales);
+
+        const tiendas = stores.map(store => ({
+            address: store.address,
+            phone: store.phone,
+            email: store.email,
+            Provider_idProvider: idProvider,
+        }));
+
+        await Store.bulkCreate(tiendas);
 
         return {
             status: 200,
-            mensaje: proveedor,
+            mensaje: await obtenerInfo(idProvider),
         };
     } catch (error) {
         return {
@@ -170,6 +153,40 @@ async function corregirInfoProveedor(infoProveedor, idProvider) {
         return {
             status: 500,
             mensaje: error.toString(),
+        };
+    }
+}
+
+async function obtenerInfo(idProvider) {
+    try {
+        const [proveedor] = await Provider.findAll({
+            attributes: [
+                "username",
+                "rfc",
+                "razonSocial",
+                "tipo",
+                "persona",
+                "categoria",
+            ],
+            where: {
+                idProvider,
+            },
+            include: [
+                SocialNetwork,
+                {
+                    model: Store,
+                },
+            ],
+        });
+
+        return {
+            status: 200,
+            mensaje: proveedor,
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            mensaje: error,
         };
     }
 }

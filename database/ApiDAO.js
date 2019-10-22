@@ -1,4 +1,11 @@
-const { Model, Provider } = require("../config/db");
+const {
+    Model,
+    Provider,
+    SocialNetwork,
+    Store,
+    Phone,
+    Email,
+} = require("../config/db");
 const firebase = require("../config/firebase");
 
 async function obtenerModelos() {
@@ -16,23 +23,6 @@ async function obtenerModelos() {
                 "file2D",
                 "createdAt",
                 "updatedAt",
-            ],
-            include: [
-                {
-                    model: Provider,
-                    as: "provider",
-                    attributes: [
-                        "name",
-                        "phone",
-                        "email",
-                        "rfc",
-                        "razonSocial",
-                        "direccion",
-                        "tipo",
-                        "persona",
-                        "categoria",
-                    ],
-                },
             ],
         });
 
@@ -69,6 +59,44 @@ async function obtenerModelos() {
     }
 }
 
+async function obtenerProveedores() {
+    try {
+        const proveedores = await Provider.findAll({
+            attributes: [
+                "idProvider",
+                "name",
+                "rfc",
+                "razonSocial",
+                "tipo",
+                "persona",
+                "categoria",
+            ],
+            include: [
+                {
+                    model: SocialNetwork,
+                    as: "socialnetwork",
+                },
+                {
+                    model: Store,
+                    as: "store",
+                    include: [Email, Phone],
+                },
+            ],
+        });
+
+        return {
+            status: 200,
+            mensaje: proveedores,
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            mensaje: error,
+        };
+    }
+}
+
 module.exports = {
     obtenerModelos,
+    obtenerProveedores,
 };

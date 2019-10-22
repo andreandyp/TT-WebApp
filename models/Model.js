@@ -28,12 +28,12 @@ function init(sequelize, Sequelize) {
             description: {
                 type: Sequelize.STRING,
             },
+            file2D: {
+                type: Sequelize.STRING,
+            },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-            },
-            file2D: {
-                type: Sequelize.STRING,
             },
         },
         { sequelize, freezeTableName: true }

@@ -16,29 +16,26 @@ function init(sequelize, Sequelize) {
             name: {
                 type: Sequelize.STRING,
             },
-            phone: {
-                type: Sequelize.STRING,
-            },
-            email: {
-                type: Sequelize.STRING,
-            },
             rfc: {
                 type: Sequelize.STRING,
             },
             razonSocial: {
                 type: Sequelize.STRING,
             },
-            direccion: {
-                type: Sequelize.STRING,
-            },
             tipo: {
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM(
+                    "ILUMINACION",
+                    "PISO",
+                    "MUEBLES",
+                    "PINTURA",
+                    "DECORACION"
+                ),
             },
             persona: {
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM("FISICA", "MORAL"),
             },
             categoria: {
-                type: Sequelize.STRING,
+                type: Sequelize.ENUM("BAJO", "MEDIO", "ALTO"),
             },
             Administrator_idAdministrator: {
                 type: Sequelize.INTEGER,
