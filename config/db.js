@@ -1,31 +1,37 @@
 const Sequelize = require("sequelize");
 
 const AdministratorModel = require("../models/Administrator");
-const ColorModel = require("../models/Color");
+const CategoryModel = require("../models/Category");
 const ModelModel = require("../models/Model");
-const ModelHasColorModel = require("../models/ModelHasColor");
+const ModelHasCategoryModel = require("../models/ModelHasCategory");
 const ModelHasPredefinedStyleModel = require("../models/ModelHasPredefinedStyle");
+const PaintModel = require("../models/Paint");
 const PredefinedStyleModel = require("../models/PredefinedStyle");
 const ProviderModel = require("../models/Provider");
+const ProviderHasTypeModel = require("../models/ProviderHasType");
 const SocialNetworkModel = require("../models/SocialNetworks");
 const StoreModel = require("../models/Store");
+const TypeModel = require("../models/Type");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
 });
 
 const Administrator = AdministratorModel(sequelize, Sequelize);
-const Color = ColorModel(sequelize, Sequelize);
+const Category = CategoryModel(sequelize, Sequelize);
 const Model = ModelModel(sequelize, Sequelize);
-const ModelHasColor = ModelHasColorModel(sequelize, Sequelize);
+const ModelHasCategory = ModelHasCategoryModel(sequelize, Sequelize);
 const ModelHasPredefinedStyle = ModelHasPredefinedStyleModel(
     sequelize,
     Sequelize
 );
+const Paint = PaintModel(sequelize, Sequelize);
 const PredefinedStyle = PredefinedStyleModel(sequelize, Sequelize);
 const Provider = ProviderModel(sequelize, Sequelize);
+const ProviderHasType = ProviderHasTypeModel(sequelize, Sequelize);
 const SocialNetwork = SocialNetworkModel(sequelize, Sequelize);
 const Store = StoreModel(sequelize, Sequelize);
+const Type = TypeModel(sequelize, Sequelize);
 
 // Asociar un administrador a varios proveedores
 Administrator.hasMany(Provider, {
@@ -49,24 +55,27 @@ Model.belongsTo(Provider, {
     targetKey: "idProvider",
 });
 
-// Asociar modelos y colores
-Model.associate = models => {
-    Model.belongsToMany(models.color, {
-        through: "model_has_color",
-        as: "colors",
-        foreignKey: "Model_idModel",
-        otherKey: "Color_idColor",
-    });
-};
+// Asociar un proveedor a varias pinturas
+Provider.hasMany(Paint, {
+    foreignKey: "Provider_idProvider",
+    sourceKey: "idProvider",
+});
 
-Color.associate = models => {
-    Color.belongsToMany(models.model, {
-        through: "model_has_color",
-        as: "colors",
-        foreignKey: "Color_idColor",
-        otherKey: "Model_idModel",
-    });
-};
+Paint.belongsTo(Provider, {
+    foreignKey: "Provider_idProvider",
+    targetKey: "idProvider",
+});
+
+// Asociar un tipo a varios proveedores
+Type.hasMany(Provider, {
+    foreignKey: "Type_idType",
+    sourceKey: "idType",
+});
+
+Provider.belongsTo(Type, {
+    foreignKey: "Type_idType",
+    targetKey: "idType",
+});
 
 // Asociar modelos y estilos predefinidos
 Model.associate = models => {
@@ -78,12 +87,50 @@ Model.associate = models => {
     });
 };
 
-Color.associate = models => {
-    Color.belongsToMany(models.model, {
+PredefinedStyle.associate = models => {
+    PredefinedStyle.belongsToMany(models.model, {
         through: "model_has_predefinedstyle",
         as: "predefinedstyles",
         foreignKey: "PredefinedStyle_idPredefinedStyle",
         otherKey: "Model_idModel",
+    });
+};
+
+// Asociar modelos y categorías
+Model.associate = models => {
+    Model.belongsToMany(models.category, {
+        through: "model_has_category",
+        as: "categories",
+        foreignKey: "Model_idModel",
+        otherKey: "Category_idCategory",
+    });
+};
+
+Category.associate = models => {
+    Category.belongsToMany(models.model, {
+        through: "model_has_category",
+        as: "categories",
+        foreignKey: "Model_idModel",
+        otherKey: "Category_idCategory",
+    });
+};
+
+// Asociar proveedores y tipos
+Provider.associate = models => {
+    Provider.belongsToMany(models.type, {
+        through: "provider_has_type",
+        as: "types",
+        foreignKey: "Provider_idProvider",
+        otherKey: "Type_idType",
+    });
+};
+
+Type.associate = models => {
+    Type.belongsToMany(models.provider, {
+        through: "provider_has_type",
+        as: "types",
+        foreignKey: "Provider_idProvider",
+        otherKey: "Type_idType",
     });
 };
 
@@ -109,17 +156,21 @@ Store.belongsTo(Provider, {
     targetKey: "idProvider",
 });
 
-sequelize.sync().then(() => console.log("Modelos sincronizados"));
+const force = false;
+sequelize.sync({ force }).then(() => console.log("Modelos sincronizados"));
 
 module.exports = {
     Administrator,
-    Color,
+    Category,
     Model,
-    ModelHasColor,
+    ModelHasCategory,
     ModelHasPredefinedStyle,
+    Paint,
     PredefinedStyle,
     Provider,
+    ProviderHasType,
     SocialNetwork,
     Store,
+    Type,
     sequelize,
 };

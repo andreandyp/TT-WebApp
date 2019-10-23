@@ -1,11 +1,4 @@
-const {
-    Model,
-    Provider,
-    SocialNetwork,
-    Store,
-    Phone,
-    Email,
-} = require("../config/db");
+const { Model, Provider, SocialNetwork, Store } = require("../config/db");
 const firebase = require("../config/firebase");
 
 async function obtenerModelos() {
@@ -74,12 +67,9 @@ async function obtenerProveedores() {
             include: [
                 {
                     model: SocialNetwork,
-                    as: "socialnetwork",
                 },
                 {
                     model: Store,
-                    as: "store",
-                    include: [Email, Phone],
                 },
             ],
         });
@@ -89,9 +79,10 @@ async function obtenerProveedores() {
             mensaje: proveedores,
         };
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
-            mensaje: error,
+            mensaje: error.toString(),
         };
     }
 }

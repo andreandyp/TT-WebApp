@@ -10,15 +10,6 @@ function init(sequelize, Sequelize) {
             name: {
                 type: Sequelize.STRING,
             },
-            type: {
-                type: Sequelize.STRING,
-            },
-            style: {
-                type: Sequelize.STRING,
-            },
-            category: {
-                type: Sequelize.STRING,
-            },
             fileAR: {
                 type: Sequelize.STRING,
             },
@@ -31,7 +22,14 @@ function init(sequelize, Sequelize) {
             file2D: {
                 type: Sequelize.STRING,
             },
+            color: {
+                type: Sequelize.STRING,
+            },
             Provider_idProvider: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            Type_idType: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },

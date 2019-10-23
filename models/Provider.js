@@ -22,19 +22,10 @@ function init(sequelize, Sequelize) {
             razonSocial: {
                 type: Sequelize.STRING,
             },
-            tipo: {
-                type: Sequelize.ENUM(
-                    "ILUMINACION",
-                    "PISO",
-                    "MUEBLES",
-                    "PINTURA",
-                    "DECORACION"
-                ),
-            },
             persona: {
                 type: Sequelize.ENUM("FISICA", "MORAL"),
             },
-            categoria: {
+            rango: {
                 type: Sequelize.ENUM("BAJO", "MEDIO", "ALTO"),
             },
             Administrator_idAdministrator: {

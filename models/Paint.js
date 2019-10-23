@@ -1,8 +1,8 @@
 function init(sequelize, Sequelize) {
-    const Color = sequelize.define(
-        "color",
+    const Paint = sequelize.define(
+        "paint",
         {
-            idColor: {
+            idPaint: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
@@ -10,14 +10,21 @@ function init(sequelize, Sequelize) {
             name: {
                 type: Sequelize.STRING,
             },
+            vendorCode: {
+                type: Sequelize.STRING,
+            },
             rgbCode: {
                 type: Sequelize.STRING,
+            },
+            Provider_idProvider: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
             },
         },
         { sequelize, timestamps: false, freezeTableName: true }
     );
 
-    return Color;
+    return Paint;
 }
 
 module.exports = init;

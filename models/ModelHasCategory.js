@@ -1,8 +1,8 @@
 function init(sequelize, Sequelize) {
-    const ModelHasColor = sequelize.define(
-        "model_has_color",
+    const ModelHasCategory = sequelize.define(
+        "model_has_category",
         {
-            idModelColor: {
+            idModelCategory: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
@@ -11,7 +11,7 @@ function init(sequelize, Sequelize) {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            Color_idColor: {
+            Category_idCategory: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
@@ -19,7 +19,7 @@ function init(sequelize, Sequelize) {
         { sequelize, timestamps: false, freezeTableName: true }
     );
 
-    return ModelHasColor;
+    return ModelHasCategory;
 }
 
 module.exports = init;
