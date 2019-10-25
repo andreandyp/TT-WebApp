@@ -1,4 +1,4 @@
-const { Model, Color, ModelHasColor } = require("../config/db");
+const { Model, Color, ModelHasColor, Type } = require("../config/db");
 const firebase = require("../config/firebase");
 
 async function obtenerModelo(idModel, idProvider) {
@@ -61,30 +61,30 @@ async function obtenerModelos(idProvider) {
 async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
     const { name, type, style, category, price, description } = datosModelo;
 
-    if (!name || !type || !style || !category || !price || !description) {
+    if (!name || !type || !price || !description) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
-    const { nameColor, rgbCode } = datosModelo;
-    if (!nameColor || !rgbCode) {
+    const { color } = datosModelo;
+    if (!color ) {
         return { status: 400, mensaje: "Faltan datos del color" };
     }
 
     try {
-        const [nuevoModelo, nuevoColor] = await Promise.all([
+        const idType = Type.find({
+            where:{
+                nameType:type
+            }
+        })
+        const [nuevoModelo, tipo] = await Promise.all([
             Model.create({
                 name,
-                type,
-                style,
-                category,
+                color,
                 price,
                 description,
                 Provider_idProvider: idProvider,
-            }),
-            Color.create({
-                name: nameColor,
-                rgbCode,
-            }),
+            }), 
+            idType
         ]);
 
         const { idModel } = nuevoModelo;
@@ -98,11 +98,7 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             nuevoModelo.update({
                 fileAR: ref3d,
                 file2D: ref2d,
-            }),
-
-            ModelHasColor.create({
-                Model_idModel: idModel,
-                Color_idColor: nuevoColor.idColor,
+                Type_idType: tipo[0].idType
             }),
         ]);
 
@@ -111,7 +107,7 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             mensaje: "Modelo creado",
         };
     } catch (error) {
-        return { status: 500, mensaje: error };
+        return { status: 500, mensaje: error.toString() };
     }
 }
 
