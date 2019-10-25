@@ -1,4 +1,11 @@
-const { Model, Color, ModelHasColor, Type } = require("../config/db");
+const {
+    Model,
+    Type,
+    PredefinedStyle,
+    Category,
+    ModelHasCategory,
+    ModelHasPredefinedStyle,
+} = require("../config/db");
 const firebase = require("../config/firebase");
 
 async function obtenerModelo(idModel, idProvider) {
@@ -59,35 +66,60 @@ async function obtenerModelos(idProvider) {
 }
 
 async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
-    const { name, type, style, category, price, description } = datosModelo;
+    const { name, price, description, color } = datosModelo;
 
-    if (!name || !type || !price || !description) {
+    if (!name || !price || !description || !color) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
-    const { color } = datosModelo;
-    if (!color ) {
-        return { status: 400, mensaje: "Faltan datos del color" };
+    const { type, style, category } = datosModelo;
+    if (!type || !style || !category) {
+        return { status: 400, mensaje: "Falta tipo, estilo y/o categoría" };
     }
 
     try {
-        const idType = Type.find({
-            where:{
-                nameType:type
-            }
-        })
-        const [nuevoModelo, tipo] = await Promise.all([
-            Model.create({
-                name,
-                color,
-                price,
-                description,
-                Provider_idProvider: idProvider,
-            }), 
-            idType
-        ]);
+        const tipo = Type.findAll({
+            where: {
+                nameType: type,
+            },
+        });
+        const estilo = PredefinedStyle.findAll({
+            where: {
+                style,
+            },
+        });
+        const categoria = Category.findAll({
+            where: {
+                category,
+            },
+        });
+        const [
+            [{ idType }],
+            [{ idPredefinedStyle }],
+            [{ idCategory }],
+        ] = await Promise.all([tipo, estilo, categoria]);
+
+        const nuevoModelo = await Model.create({
+            name,
+            price,
+            description,
+            color,
+            Type_idType: idType,
+            Provider_idProvider: idProvider,
+        });
 
         const { idModel } = nuevoModelo;
+
+        await Promise.all([
+            ModelHasCategory.create({
+                Model_idModel: idModel,
+                Category_idCategory: idCategory,
+            }),
+            ModelHasPredefinedStyle.create({
+                Model_idModel: idModel,
+                PredefinedStyle_idPredefinedStyle: idPredefinedStyle,
+            }),
+        ]);
 
         const ref3dFB = subirAFirebase(modelo3d, idProvider, idModel);
         const ref2dFB = subirAFirebase(modelo2d, idProvider, idModel);
@@ -98,7 +130,6 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             nuevoModelo.update({
                 fileAR: ref3d,
                 file2D: ref2d,
-                Type_idType: tipo[0].idType
             }),
         ]);
 

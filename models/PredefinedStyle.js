@@ -8,16 +8,7 @@ function init(sequelize, Sequelize) {
                 primaryKey: true,
             },
             style: {
-                type: Sequelize.ENUM(
-                    "MODERNO",
-                    "BARROCO",
-                    "MINIMALISTA",
-                    "INDUSTRIAL",
-                    "RUSTICO",
-                    "CLASICO",
-                    "VINTAGE",
-                    "OTRO"
-                ),
+                type: Sequelize.STRING,
             },
         },
         { sequelize, timestamps: false, freezeTableName: true }

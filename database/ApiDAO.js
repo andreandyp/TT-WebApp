@@ -1,4 +1,12 @@
-const { Model, Provider, SocialNetwork, Store } = require("../config/db");
+const {
+    Model,
+    Type,
+    PredefinedStyle,
+    Category,
+    Provider,
+    SocialNetwork,
+    Store,
+} = require("../config/db");
 const firebase = require("../config/firebase");
 
 async function obtenerModelos() {
@@ -7,15 +15,32 @@ async function obtenerModelos() {
             attributes: [
                 "idModel",
                 "name",
-                "type",
-                "style",
-                "category",
                 "fileAR",
                 "price",
                 "description",
                 "file2D",
                 "createdAt",
                 "updatedAt",
+                "Provider_idProvider",
+            ],
+            include: [
+                {
+                    model: PredefinedStyle,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idPredefinedStyle", "style"],
+                },
+                {
+                    model: Category,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idCategory", "category"],
+                },
+                {
+                    model: Type,
+                },
             ],
         });
 
@@ -45,6 +70,7 @@ async function obtenerModelos() {
             mensaje: modelos,
         };
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
             mensaje: error,

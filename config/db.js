@@ -78,61 +78,41 @@ Provider.belongsTo(Type, {
 });
 
 // Asociar modelos y estilos predefinidos
-Model.associate = models => {
-    Model.belongsToMany(models.predefinedstyle, {
-        through: "model_has_predefinedstyle",
-        as: "predefinedstyles",
-        foreignKey: "Model_idModel",
-        otherKey: "PredefinedStyle_idPredefinedStyle",
-    });
-};
+Model.belongsToMany(PredefinedStyle, {
+    through: ModelHasPredefinedStyle,
+    foreignKey: "Model_idModel",
+    otherKey: "PredefinedStyle_idPredefinedStyle",
+});
 
-PredefinedStyle.associate = models => {
-    PredefinedStyle.belongsToMany(models.model, {
-        through: "model_has_predefinedstyle",
-        as: "predefinedstyles",
-        foreignKey: "PredefinedStyle_idPredefinedStyle",
-        otherKey: "Model_idModel",
-    });
-};
+PredefinedStyle.belongsToMany(Model, {
+    through: ModelHasPredefinedStyle,
+    foreignKey: "PredefinedStyle_idPredefinedStyle",
+    otherKey: "Model_idModel",
+});
 
 // Asociar modelos y categorías
-Model.associate = models => {
-    Model.belongsToMany(models.category, {
-        through: "model_has_category",
-        as: "categories",
-        foreignKey: "Model_idModel",
-        otherKey: "Category_idCategory",
-    });
-};
+Model.belongsToMany(Category, {
+    through: ModelHasCategory,
+    foreignKey: "Model_idModel",
+    otherKey: "Category_idCategory",
+});
 
-Category.associate = models => {
-    Category.belongsToMany(models.model, {
-        through: "model_has_category",
-        as: "categories",
-        foreignKey: "Model_idModel",
-        otherKey: "Category_idCategory",
-    });
-};
+Category.belongsToMany(Model, {
+    through: ModelHasCategory,
+    foreignKey: "Category_idCategory",
+    otherKey: "Model_idModel",
+});
 
-// Asociar proveedores y tipos
-Provider.associate = models => {
-    Provider.belongsToMany(models.type, {
-        through: "provider_has_type",
-        as: "types",
-        foreignKey: "Provider_idProvider",
-        otherKey: "Type_idType",
-    });
-};
+// Asociar un tipo a varios modelos
+Type.hasMany(Model, {
+    foreignKey: "Type_idType",
+    sourceKey: "idType",
+});
 
-Type.associate = models => {
-    Type.belongsToMany(models.provider, {
-        through: "provider_has_type",
-        as: "types",
-        foreignKey: "Provider_idProvider",
-        otherKey: "Type_idType",
-    });
-};
+Model.belongsTo(Type, {
+    foreignKey: "Type_idType",
+    targetKey: "idType",
+});
 
 // Asociar un proveedor a varias redes sociales
 Provider.hasMany(SocialNetwork, {
