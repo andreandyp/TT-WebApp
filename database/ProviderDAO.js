@@ -1,37 +1,50 @@
-const { Provider, SocialNetwork, Store } = require("../config/db");
+const {
+    Provider,
+    SocialNetwork,
+    Store,
+    ProviderHasType,
+    Type,
+} = require("../config/db");
 
 async function actualizarInfoProveedor(infoProveedor, idProvider) {
     try {
         const {
-            phone,
-            email,
             rfc,
             razonSocial,
-            direccion,
-            tipo,
             persona,
-            categoria,
+            rango,
             socialNetworks = [],
             stores = [],
+            tipo = [],
         } = infoProveedor;
 
-        await Provider.update(
-            {
-                phone,
-                email,
-                rfc,
-                razonSocial,
-                direccion,
-                tipo,
-                persona,
-                categoria,
+        const tipos = await Type.findAll({
+            where: {
+                nameType: tipo,
             },
-            {
-                where: {
-                    idProvider,
+        });
+
+        const nuevosTipos = tipos.map(({ idType }) => ({
+            Provider_idProvider: idProvider,
+            Type_idType: idType,
+        }));
+
+        await Promise.all([
+            Provider.update(
+                {
+                    rfc,
+                    razonSocial,
+                    persona,
+                    rango,
                 },
-            }
-        );
+                {
+                    where: {
+                        idProvider,
+                    },
+                }
+            ),
+            ProviderHasType.bulkCreate(nuevosTipos),
+        ]);
 
         const redesSociales = socialNetworks.map(red => ({
             socialNetworkUrl: red,
@@ -49,10 +62,7 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
 
         await Store.bulkCreate(tiendas);
 
-        return {
-            status: 200,
-            mensaje: await obtenerInfo(idProvider),
-        };
+        return await obtenerInfo();
     } catch (error) {
         return {
             status: 500,
@@ -64,27 +74,21 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
 async function corregirInfoProveedor(infoProveedor, idProvider) {
     try {
         const {
-            phone,
-            email,
             rfc,
             razonSocial,
-            direccion,
-            tipo,
             persona,
-            categoria,
-            socialNetworks,
+            rango,
+            socialNetworks = [],
+            stores = [],
+            tipo = [],
         } = infoProveedor;
 
         await Provider.update(
             {
-                phone,
-                email,
                 rfc,
                 razonSocial,
-                direccion,
-                tipo,
                 persona,
-                categoria,
+                rango,
             },
             {
                 where: {
@@ -162,19 +166,29 @@ async function obtenerInfo(idProvider) {
         const [proveedor] = await Provider.findAll({
             attributes: [
                 "username",
+                "name",
                 "rfc",
                 "razonSocial",
-                "tipo",
                 "persona",
-                "categoria",
+                "rango",
             ],
             where: {
                 idProvider,
             },
             include: [
-                SocialNetwork,
+                {
+                    model: SocialNetwork,
+                    attributes: ["idSocialNetwork", "socialNetworkUrl"],
+                },
                 {
                     model: Store,
+                    attributes: ["idStore", "address", "phone", "email"],
+                },
+                {
+                    model: Type,
+                    through: {
+                        attributes: [],
+                    },
                 },
             ],
         });
@@ -184,6 +198,7 @@ async function obtenerInfo(idProvider) {
             mensaje: proveedor,
         };
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
             mensaje: error,

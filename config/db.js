@@ -67,14 +67,16 @@ Paint.belongsTo(Provider, {
 });
 
 // Asociar un tipo a varios proveedores
-Type.hasMany(Provider, {
+Type.belongsToMany(Provider, {
+    through: ProviderHasType,
     foreignKey: "Type_idType",
-    sourceKey: "idType",
+    otherKey: "Provider_idProvider",
 });
 
-Provider.belongsTo(Type, {
-    foreignKey: "Type_idType",
-    targetKey: "idType",
+Provider.belongsToMany(Type, {
+    through: ProviderHasType,
+    foreignKey: "Provider_idProvider",
+    otherKey: "Type_idType",
 });
 
 // Asociar modelos y estilos predefinidos

@@ -86,16 +86,23 @@ async function obtenerProveedores() {
                 "name",
                 "rfc",
                 "razonSocial",
-                "tipo",
                 "persona",
-                "categoria",
+                "rango",
             ],
             include: [
                 {
                     model: SocialNetwork,
+                    attributes: ["idSocialNetwork", "socialNetworkUrl"],
                 },
                 {
                     model: Store,
+                    attributes: ["idStore", "address", "phone", "email"],
+                },
+                {
+                    model: Type,
+                    through: {
+                        attributes: [],
+                    },
                 },
             ],
         });
