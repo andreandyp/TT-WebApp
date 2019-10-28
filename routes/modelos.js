@@ -55,7 +55,7 @@ router.post(
         const resultado = await añadirModelo({
             datosModelo: req.body,
             idProvider: req.user.idProvider,
-            modelo3d: modelo3d[0],
+            modelo3d: modelo3d ? modelo3d[0] : "",
             modelo2d: modelo2d[0],
         });
 
