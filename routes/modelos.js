@@ -44,7 +44,7 @@ router.post(
     ]),
     async (req, res) => {
         const { modelo3d, modelo2d } = req.files;
-        if (!modelo3d) {
+        if (req.body.category !== "PISOS" && !modelo3d) {
             return res.status(400).send("Falta el modelo en 3D");
         }
 
@@ -52,12 +52,12 @@ router.post(
             return res.status(400).send("Falta la imagen del modelo");
         }
 
-        const resultado = await añadirModelo(
-            req.body,
-            req.user.idProvider,
-            modelo3d[0],
-            modelo2d[0]
-        );
+        const resultado = await añadirModelo({
+            datosModelo: req.body,
+            idProvider: req.user.idProvider,
+            modelo3d: modelo3d[0],
+            modelo2d: modelo2d[0],
+        });
 
         res.status(resultado.status).send(resultado.mensaje);
     }

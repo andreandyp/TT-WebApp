@@ -65,7 +65,7 @@ async function obtenerModelos(idProvider) {
     }
 }
 
-async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
+async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
     const { name, price, description, color } = datosModelo;
 
     if (!name || !price || !description || !color) {
@@ -121,17 +121,30 @@ async function añadirModelo(datosModelo, idProvider, modelo3d, modelo2d) {
             }),
         ]);
 
-        const ref3dFB = subirAFirebase(modelo3d, idProvider, idModel);
-        const ref2dFB = subirAFirebase(modelo2d, idProvider, idModel);
+        if (modelo3d) {
+            const ref3dFB = subirAFirebase(modelo3d, idProvider, idModel);
+            const ref2dFB = subirAFirebase(modelo2d, idProvider, idModel);
 
-        const [ref3d, ref2d] = await Promise.all([ref3dFB, ref2dFB]);
+            const [ref3d, ref2d] = await Promise.all([ref3dFB, ref2dFB]);
 
-        await Promise.all([
-            nuevoModelo.update({
-                fileAR: ref3d,
-                file2D: ref2d,
-            }),
-        ]);
+            await Promise.all([
+                nuevoModelo.update({
+                    fileAR: ref3d,
+                    file2D: ref2d,
+                }),
+            ]);
+        } else {
+            const ref2dFB = subirAFirebase(modelo2d, idProvider, idModel);
+
+            const ref2d = await ref2dFB;
+
+            await Promise.all([
+                nuevoModelo.update({
+                    fileAR: "",
+                    file2D: ref2d,
+                }),
+            ]);
+        }
 
         return {
             status: 200,
