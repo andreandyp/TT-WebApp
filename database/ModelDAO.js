@@ -14,19 +14,37 @@ async function obtenerModelo(idModel, idProvider) {
             attributes: [
                 "idModel",
                 "name",
-                "type",
-                "style",
-                "category",
                 "fileAR",
                 "price",
                 "description",
                 "file2D",
+                "createdAt",
+                "updatedAt",
+                "Provider_idProvider",
             ],
             where: {
                 idModel,
                 Provider_idProvider: idProvider,
             },
-            raw: true,
+            include: [
+                {
+                    model: PredefinedStyle,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idPredefinedStyle", "style"],
+                },
+                {
+                    model: Category,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idCategory", "category"],
+                },
+                {
+                    model: Type,
+                },
+            ],
         });
 
         if (!modelo) {
@@ -45,18 +63,36 @@ async function obtenerModelos(idProvider) {
             attributes: [
                 "idModel",
                 "name",
-                "type",
-                "style",
-                "category",
                 "fileAR",
                 "price",
                 "description",
                 "file2D",
+                "createdAt",
+                "updatedAt",
+                "Provider_idProvider",
             ],
             where: {
                 Provider_idProvider: idProvider,
             },
-            raw: true,
+            include: [
+                {
+                    model: PredefinedStyle,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idPredefinedStyle", "style"],
+                },
+                {
+                    model: Category,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idCategory", "category"],
+                },
+                {
+                    model: Type,
+                },
+            ],
         });
 
         return { status: 200, mensaje: modelos };

@@ -47,12 +47,14 @@ async function obtenerModelos() {
         const firebaseStorage = firebase.bucket();
 
         for (const modelo of modelos) {
-            const [urlAR] = await firebaseStorage
-                .file(modelo.fileAR)
-                .getSignedUrl({
-                    action: "read",
-                    expires: Date.now() + 7200000, // 2 horas de acceso... por si acaso
-                });
+            if (modelo.fileAR) {
+                var [urlAR] = await firebaseStorage
+                    .file(modelo.fileAR)
+                    .getSignedUrl({
+                        action: "read",
+                        expires: Date.now() + 7200000, // 2 horas de acceso... por si acaso
+                    });
+            }
 
             const [url2D] = await firebaseStorage
                 .file(modelo.file2D)
