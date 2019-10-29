@@ -62,7 +62,7 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
 
         await Store.bulkCreate(tiendas);
 
-        return await obtenerInfo();
+        return await obtenerInfo(idProvider);
     } catch (error) {
         return {
             status: 500,
@@ -198,7 +198,6 @@ async function obtenerInfo(idProvider) {
             mensaje: proveedor,
         };
     } catch (error) {
-        console.log(error);
         return {
             status: 500,
             mensaje: error,
