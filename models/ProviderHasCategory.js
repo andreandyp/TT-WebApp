@@ -11,7 +11,7 @@ function init(sequelize, Sequelize) {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            Type_idType: {
+            Category_idCategory: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
