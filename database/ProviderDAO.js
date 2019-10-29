@@ -18,15 +18,15 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             category = [],
         } = infoProveedor;
 
-        const tipos = await Category.findAll({
+        const categorias = await Category.findAll({
             where: {
                 category,
             },
         });
 
-        const nuevasCategorias = tipos.map(({ idType }) => ({
+        const nuevasCategorias = categorias.map(({ idCategory }) => ({
             Provider_idProvider: idProvider,
-            Category_idCategory: idType,
+            Category_idCategory: idCategory,
         }));
 
         await Promise.all([
