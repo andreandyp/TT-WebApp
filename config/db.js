@@ -8,7 +8,7 @@ const ModelHasPredefinedStyleModel = require("../models/ModelHasPredefinedStyle"
 const PaintModel = require("../models/Paint");
 const PredefinedStyleModel = require("../models/PredefinedStyle");
 const ProviderModel = require("../models/Provider");
-const ProviderHasTypeModel = require("../models/ProviderHasType");
+const ProviderHasCategoryModel = require("../models/ProviderHasCategory");
 const SocialNetworkModel = require("../models/SocialNetworks");
 const StoreModel = require("../models/Store");
 const TypeModel = require("../models/Type");
@@ -28,7 +28,7 @@ const ModelHasPredefinedStyle = ModelHasPredefinedStyleModel(
 const Paint = PaintModel(sequelize, Sequelize);
 const PredefinedStyle = PredefinedStyleModel(sequelize, Sequelize);
 const Provider = ProviderModel(sequelize, Sequelize);
-const ProviderHasType = ProviderHasTypeModel(sequelize, Sequelize);
+const ProviderHasCategory = ProviderHasCategoryModel(sequelize, Sequelize);
 const SocialNetwork = SocialNetworkModel(sequelize, Sequelize);
 const Store = StoreModel(sequelize, Sequelize);
 const Type = TypeModel(sequelize, Sequelize);
@@ -66,17 +66,17 @@ Paint.belongsTo(Provider, {
     targetKey: "idProvider",
 });
 
-// Asociar un tipo a varios proveedores
-Type.belongsToMany(Provider, {
-    through: ProviderHasType,
-    foreignKey: "Type_idType",
+// Asociar proveedores y categorías
+Category.belongsToMany(Provider, {
+    through: ProviderHasCategory,
+    foreignKey: "Category_idCategory",
     otherKey: "Provider_idProvider",
 });
 
-Provider.belongsToMany(Type, {
-    through: ProviderHasType,
+Provider.belongsToMany(Category, {
+    through: ProviderHasCategory,
     foreignKey: "Provider_idProvider",
-    otherKey: "Type_idType",
+    otherKey: "Category_idCategory",
 });
 
 // Asociar modelos y estilos predefinidos
@@ -150,7 +150,7 @@ module.exports = {
     Paint,
     PredefinedStyle,
     Provider,
-    ProviderHasType,
+    ProviderHasCategory,
     SocialNetwork,
     Store,
     Type,
