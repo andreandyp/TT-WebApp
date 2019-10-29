@@ -1,6 +1,6 @@
 function init(sequelize, Sequelize) {
-    const ProviderHasType = sequelize.define(
-        "provider_has_type",
+    const ProviderHasCategory = sequelize.define(
+        "provider_has_category",
         {
             idProviderType: {
                 type: Sequelize.INTEGER,
@@ -19,7 +19,7 @@ function init(sequelize, Sequelize) {
         { sequelize, timestamps: false, freezeTableName: true }
     );
 
-    return ProviderHasType;
+    return ProviderHasCategory;
 }
 
 module.exports = init;

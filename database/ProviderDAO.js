@@ -2,8 +2,8 @@ const {
     Provider,
     SocialNetwork,
     Store,
-    ProviderHasType,
-    Type,
+    ProviderHasCategory,
+    Category,
 } = require("../config/db");
 
 async function actualizarInfoProveedor(infoProveedor, idProvider) {
@@ -15,18 +15,18 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             rango,
             socialNetworks = [],
             stores = [],
-            tipo = [],
+            category = [],
         } = infoProveedor;
 
-        const tipos = await Type.findAll({
+        const tipos = await Category.findAll({
             where: {
-                nameType: tipo,
+                category,
             },
         });
 
-        const nuevosTipos = tipos.map(({ idType }) => ({
+        const nuevasCategorias = tipos.map(({ idType }) => ({
             Provider_idProvider: idProvider,
-            Type_idType: idType,
+            Category_idCategory: idType,
         }));
 
         await Promise.all([
@@ -43,7 +43,7 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
                     },
                 }
             ),
-            ProviderHasType.bulkCreate(nuevosTipos),
+            ProviderHasCategory.bulkCreate(nuevasCategorias),
         ]);
 
         const redesSociales = socialNetworks.map(red => ({
@@ -185,7 +185,7 @@ async function obtenerInfo(idProvider) {
                     attributes: ["idStore", "address", "phone", "email"],
                 },
                 {
-                    model: Type,
+                    model: Category,
                     through: {
                         attributes: [],
                     },
