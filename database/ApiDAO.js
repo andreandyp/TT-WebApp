@@ -101,7 +101,7 @@ async function obtenerProveedores() {
                     attributes: ["idStore", "address", "phone", "email"],
                 },
                 {
-                    model: Type,
+                    model: Category,
                     through: {
                         attributes: [],
                     },
