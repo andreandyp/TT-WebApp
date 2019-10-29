@@ -17,7 +17,6 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             stores = [],
             category = [],
         } = infoProveedor;
-
         const categorias = await Category.findAll({
             where: {
                 category,
