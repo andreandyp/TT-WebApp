@@ -130,10 +130,31 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             },
         });
         const [
-            [{ idType }],
-            [{ idPredefinedStyle }],
-            [{ idCategory }],
+            [{ idType } = { idType: -1 }],
+            [{ idPredefinedStyle } = { idPredefinedStyle: -1 }],
+            [{ idCategory } = { idCategory: -1 }],
         ] = await Promise.all([tipo, estilo, categoria]);
+
+        if (idType === -1) {
+            return {
+                status: 400,
+                mensaje: `No existe el tipo ${type}`,
+            };
+        }
+
+        if (idPredefinedStyle === -1) {
+            return {
+                status: 400,
+                mensaje: `No existe el estilo ${style}`,
+            };
+        }
+
+        if (idCategory === -1) {
+            return {
+                status: 400,
+                mensaje: `No existe la categoría ${category}`,
+            };
+        }
 
         const nuevoModelo = await Model.create({
             name,
