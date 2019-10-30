@@ -23,6 +23,7 @@ async function obtenerModelos() {
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
+                "Type_idType",
             ],
             include: [
                 {
@@ -30,17 +31,14 @@ async function obtenerModelos() {
                     through: {
                         attributes: [],
                     },
-                    attributes: ["idPredefinedStyle", "style"],
+                    attributes: ["idPredefinedStyle"],
                 },
                 {
                     model: Category,
                     through: {
                         attributes: [],
                     },
-                    attributes: ["idCategory", "category"],
-                },
-                {
-                    model: Type,
+                    attributes: ["idCategory"],
                 },
             ],
         });
@@ -106,6 +104,7 @@ async function obtenerProveedores() {
                     through: {
                         attributes: [],
                     },
+                    attributes: ["idCategory"],
                 },
             ],
         });
@@ -123,7 +122,32 @@ async function obtenerProveedores() {
     }
 }
 
+async function obtenerDatos() {
+    try {
+        const [tipos, categorias, estilos] = await Promise.all([
+            Type.findAll(),
+            Category.findAll(),
+            PredefinedStyle.findAll(),
+        ]);
+
+        return {
+            status: 200,
+            mensaje: {
+                tipos,
+                estilos,
+                categorias,
+            },
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            mensaje: error.toString(),
+        };
+    }
+}
+
 module.exports = {
     obtenerModelos,
     obtenerProveedores,
+    obtenerDatos,
 };
