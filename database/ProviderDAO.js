@@ -23,6 +23,13 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             },
         });
 
+        if (categorias.length !== category.length) {
+            return {
+                status: 400,
+                mensaje: "Una o más de las categorías no existen",
+            };
+        }
+
         const nuevasCategorias = categorias.map(({ idCategory }) => ({
             Provider_idProvider: idProvider,
             Category_idCategory: idCategory,

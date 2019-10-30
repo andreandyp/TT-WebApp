@@ -17,6 +17,7 @@ async function obtenerModelos() {
                 "name",
                 "fileAR",
                 "price",
+                "color",
                 "description",
                 "file2D",
                 "createdAt",

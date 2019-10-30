@@ -2,7 +2,7 @@ function init(sequelize, Sequelize) {
     const ProviderHasCategory = sequelize.define(
         "provider_has_category",
         {
-            idProviderType: {
+            idProviderCategory: {
                 type: Sequelize.INTEGER,
                 autoIncrement: true,
                 primaryKey: true,
