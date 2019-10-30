@@ -23,6 +23,7 @@ async function obtenerModelos() {
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
+                "Type_idType",
             ],
             include: [
                 {
@@ -38,9 +39,6 @@ async function obtenerModelos() {
                         attributes: [],
                     },
                     attributes: ["idCategory"],
-                },
-                {
-                    model: Type,
                 },
             ],
         });
