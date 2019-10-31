@@ -16,6 +16,7 @@ var providerRouter = require("./routes/proveedor");
 var modelRouter = require("./routes/modelos");
 var viewsRouter = require("./routes/index");
 var apiRouter = require("./routes/api");
+var paintRouter = require("./routes/pinturas");
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use("/auth", authRouter);
 app.use("/proveedor", providerRouter);
 app.use("/modelos", modelRouter);
 app.use("/api", apiRouter);
+app.use("/pinturas", paintRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
