@@ -35,22 +35,20 @@ async function actualizarInfoProveedor(infoProveedor, idProvider) {
             Category_idCategory: idCategory,
         }));
 
-        await Promise.all([
-            Provider.update(
-                {
-                    rfc,
-                    razonSocial,
-                    persona,
-                    rango,
+        await Provider.update(
+            {
+                rfc,
+                razonSocial,
+                persona,
+                rango,
+            },
+            {
+                where: {
+                    idProvider,
                 },
-                {
-                    where: {
-                        idProvider,
-                    },
-                }
-            ),
-            ProviderHasCategory.bulkCreate(nuevasCategorias),
-        ]);
+            }
+        );
+        await ProviderHasCategory.bulkCreate(nuevasCategorias);
 
         const redesSociales = socialNetworks.map(red => ({
             socialNetworkUrl: red,
@@ -86,7 +84,7 @@ async function corregirInfoProveedor(infoProveedor, idProvider) {
             rango,
             socialNetworks = [],
             stores = [],
-            tipo = [],
+            categories = [],
         } = infoProveedor;
 
         await Provider.update(
@@ -103,62 +101,75 @@ async function corregirInfoProveedor(infoProveedor, idProvider) {
             }
         );
 
-        if (socialNetworks && Array.isArray(socialNetworks)) {
-            socialNetworks.forEach(async elem => {
-                if (typeof elem === "number") {
-                    await SocialNetwork.destroy({
-                        where: {
-                            idSocialNetwork: elem,
-                            Provider_idProvider: idProvider,
-                        },
-                    });
-                } else {
-                    await SocialNetwork.update(
-                        {
-                            socialNetworkUrl: elem.socialNetworkUrl,
-                        },
-                        {
-                            where: {
-                                idSocialNetwork: elem.idSocialNetwork,
-                                Provider_idProvider: idProvider,
-                            },
-                        }
-                    );
-                }
-            });
-        }
-
-        const [proveedor] = await Provider.findAll({
-            attributes: [
-                "username",
-                "phone",
-                "email",
-                "rfc",
-                "razonSocial",
-                "direccion",
-                "tipo",
-                "persona",
-                "categoria",
-            ],
-            where: {
-                idProvider,
-            },
-            include: [
-                {
-                    model: SocialNetwork,
-                    as: "socialnetworks",
-                    attributes: ["idSocialNetwork", "socialNetworkUrl"],
+        for (let store of stores) {
+            if (typeof store === "number") {
+                await Store.destroy({
                     where: {
+                        idStore: store,
                         Provider_idProvider: idProvider,
                     },
-                },
-            ],
-        });
+                });
+            } else {
+                await Store.update(
+                    {
+                        address: store.address || "",
+                        phone: store.phone || "",
+                        email: store.email || "",
+                    },
+                    {
+                        where: {
+                            idStore: store.idStore,
+                            Provider_idProvider: idProvider,
+                        },
+                    }
+                );
+            }
+        }
 
-        return {
-            status: 200,
-            mensaje: proveedor,
-        };
+        for (let network of socialNetworks) {
+            if (typeof network === "number") {
+                await SocialNetwork.destroy({
+                    where: {
+                        idSocialNetwork: network,
+                        Provider_idProvider: idProvider,
+                    },
+                });
+            } else {
+                await SocialNetwork.update(
+                    {
+                        socialNetworkUrl: network.socialNetworkUrl || "",
+                    },
+                    {
+                        where: {
+                            idSocialNetwork: network.idSocialNetwork,
+                            Provider_idProvider: idProvider,
+                        },
+                    }
+                );
+            }
+        }
+
+        const [categorias] = await Promise.all([
+            Category.findAll({
+                where: {
+                    category: categories,
+                },
+            }),
+            await ProviderHasCategory.destroy({
+                where: {
+                    Provider_idProvider: idProvider,
+                },
+            }),
+        ]);
+
+        const nuevasCategorias = categorias.map(({ idCategory }) => ({
+            Provider_idProvider: idProvider,
+            Category_idCategory: idCategory,
+        }));
+
+        await ProviderHasCategory.bulkCreate(nuevasCategorias);
+
+        return await obtenerInfo(idProvider);
     } catch (error) {
         return {
             status: 500,
