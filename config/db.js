@@ -5,6 +5,7 @@ const CategoryModel = require("../models/Category");
 const ModelModel = require("../models/Model");
 const ModelHasCategoryModel = require("../models/ModelHasCategory");
 const ModelHasPredefinedStyleModel = require("../models/ModelHasPredefinedStyle");
+const ModelHasTypeModel = require("../models/ModelHasType");
 const PaintModel = require("../models/Paint");
 const PredefinedStyleModel = require("../models/PredefinedStyle");
 const ProviderModel = require("../models/Provider");
@@ -25,6 +26,7 @@ const ModelHasPredefinedStyle = ModelHasPredefinedStyleModel(
     sequelize,
     Sequelize
 );
+const ModelHasType = ModelHasTypeModel(sequelize, Sequelize);
 const Paint = PaintModel(sequelize, Sequelize);
 const PredefinedStyle = PredefinedStyleModel(sequelize, Sequelize);
 const Provider = ProviderModel(sequelize, Sequelize);
@@ -92,6 +94,19 @@ PredefinedStyle.belongsToMany(Model, {
     otherKey: "Model_idModel",
 });
 
+// Asociar modelos y tipos
+Model.belongsToMany(Type, {
+    through: ModelHasType,
+    foreignKey: "Model_idModel",
+    otherKey: "Type_idType",
+});
+
+Type.belongsToMany(Model, {
+    through: ModelHasType,
+    foreignKey: "Type_idType",
+    otherKey: "Model_idModel",
+});
+
 // Asociar modelos y categorías
 Model.belongsToMany(Category, {
     through: ModelHasCategory,
@@ -147,6 +162,7 @@ module.exports = {
     Model,
     ModelHasCategory,
     ModelHasPredefinedStyle,
+    ModelHasType,
     Paint,
     PredefinedStyle,
     Provider,
