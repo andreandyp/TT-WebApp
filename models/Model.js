@@ -25,6 +25,9 @@ function init(sequelize, Sequelize) {
             color: {
                 type: Sequelize.STRING,
             },
+            medidas: {
+                type: Sequelize.STRING,
+            },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
                 allowNull: false,

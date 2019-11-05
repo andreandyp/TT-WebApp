@@ -6,6 +6,7 @@ const {
     Provider,
     SocialNetwork,
     Store,
+    Paint,
 } = require("../config/db");
 const firebase = require("../config/firebase");
 
@@ -146,8 +147,37 @@ async function obtenerDatos() {
     }
 }
 
+async function obtenerPinturas() {
+    try {
+        const pinturas = await Paint.findAll({
+            attributes: [
+                "idPaint",
+                "name",
+                "vendorCode",
+                "rgbCode",
+                "hexCode",
+                "Provider_idProvider",
+            ],
+        });
+
+        return {
+            status: 200,
+            mensaje: pinturas,
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            mensaje: error.toString(),
+        };
+    }
+}
+
+async function obtenerEscenas() {}
+
 module.exports = {
     obtenerModelos,
     obtenerProveedores,
     obtenerDatos,
+    obtenerPinturas,
+    obtenerEscenas,
 };

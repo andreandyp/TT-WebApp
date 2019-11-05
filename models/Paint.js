@@ -16,6 +16,9 @@ function init(sequelize, Sequelize) {
             rgbCode: {
                 type: Sequelize.STRING,
             },
+            hexCode: {
+                type: Sequelize.STRING,
+            },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
                 allowNull: false,

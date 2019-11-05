@@ -6,6 +6,7 @@ const {
     obtenerPinturas,
     obtenerPintura,
     añadirPintura,
+    modificarPintura,
     eliminarPintura,
 } = require("../database/PaintDAO");
 
@@ -36,6 +37,15 @@ router.get("/:idPaint", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const resultado = await añadirPintura({
+        datosPintura: req.body,
+        idProvider: req.user.idProvider,
+    });
+
+    res.status(resultado.status).send(resultado.mensaje);
+});
+
+router.put("/", async (req, res) => {
+    const resultado = await modificarPintura({
         datosPintura: req.body,
         idProvider: req.user.idProvider,
     });
