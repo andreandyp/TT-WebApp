@@ -52,7 +52,7 @@ async function obtenerModelos() {
                     .file(modelo.fileAR)
                     .getSignedUrl({
                         action: "read",
-                        expires: Date.now() + 7200000, // 2 horas de acceso... por si acaso
+                        expires: Date.now() + 3600000 * 24 * 30, // 1 mes 😅
                     });
             }
 
@@ -60,7 +60,7 @@ async function obtenerModelos() {
                 .file(modelo.file2D)
                 .getSignedUrl({
                     action: "read",
-                    expires: Date.now() + 7200000, // 2 horas de acceso... por si acaso
+                    expires: Date.now() + 3600000 * 24 * 30, // 1 mes 😅
                 });
 
             modelo.fileAR = urlAR;
