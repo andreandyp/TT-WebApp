@@ -5,6 +5,7 @@ const {
     Category,
     ModelHasCategory,
     ModelHasPredefinedStyle,
+    ModelHasType,
 } = require("../config/db");
 const firebase = require("../config/firebase");
 
@@ -18,6 +19,8 @@ async function obtenerModelo(idModel, idProvider) {
                 "price",
                 "description",
                 "file2D",
+                "medidas",
+                "codigo",
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
@@ -43,6 +46,10 @@ async function obtenerModelo(idModel, idProvider) {
                 },
                 {
                     model: Type,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idType", "nameType"],
                 },
             ],
         });
@@ -67,6 +74,8 @@ async function obtenerModelos(idProvider) {
                 "price",
                 "description",
                 "file2D",
+                "medidas",
+                "codigo",
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
@@ -91,6 +100,10 @@ async function obtenerModelos(idProvider) {
                 },
                 {
                     model: Type,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idType", "nameType"],
                 },
             ],
         });
@@ -102,9 +115,9 @@ async function obtenerModelos(idProvider) {
 }
 
 async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
-    const { name, price, description, color } = datosModelo;
+    const { name, price, description, color, codigo, medidas } = datosModelo;
 
-    if (!name || !price || !description || !color) {
+    if (!name || !price || !description || !color || !codigo || !medidas) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
@@ -113,7 +126,7 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
         return { status: 400, mensaje: "Falta tipo, estilo y/o categoría" };
     }
 
-    type = type.toUpperCase();
+    type = type.toUpperCase().split(",");
     style = style.toUpperCase().split(",");
     category = category.toUpperCase().split(",");
 
@@ -134,16 +147,16 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             },
         });
 
-        const [
-            [{ idType } = { idType: -1 }],
-            estilos,
-            categorias,
-        ] = await Promise.all([tipo, estilo, categoria]);
+        const [tipos, estilos, categorias] = await Promise.all([
+            tipo,
+            estilo,
+            categoria,
+        ]);
 
-        if (idType === -1) {
+        if (tipos.length === 0 || tipos.length !== type.length) {
             return {
                 status: 400,
-                mensaje: `No existe el tipo ${type}`,
+                mensaje: "No existe alguno de los tipos o todos",
             };
         }
 
@@ -166,29 +179,32 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             price,
             description,
             color,
-            Type_idType: idType,
             Provider_idProvider: idProvider,
+            codigo,
+            medidas,
         });
 
         const { idModel } = nuevoModelo;
 
         const nuevasCategorias = categorias.map(({ idCategory }) => ({
-            Model_idModel: idProvider,
+            Model_idModel: idModel,
             Category_idCategory: idCategory,
         }));
 
-        console.log(nuevasCategorias);
-
         const nuevosEstilos = estilos.map(({ idPredefinedStyle }) => ({
-            Model_idModel: idProvider,
+            Model_idModel: idModel,
             PredefinedStyle_idPredefinedStyle: idPredefinedStyle,
         }));
 
-        console.log(nuevosEstilos);
+        const nuevosTipos = tipos.map(({ idType }) => ({
+            Model_idModel: idModel,
+            Type_idType: idType,
+        }));
 
         await Promise.all([
             ModelHasCategory.bulkCreate(nuevasCategorias),
             ModelHasPredefinedStyle.bulkCreate(nuevosEstilos),
+            ModelHasType.bulkCreate(nuevosTipos),
         ]);
 
         if (modelo3d) {
@@ -216,10 +232,7 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             ]);
         }
 
-        return {
-            status: 200,
-            mensaje: "Modelo creado",
-        };
+        return await obtenerModelo(idModel, idProvider);
     } catch (error) {
         return { status: 500, mensaje: error.toString() };
     }
