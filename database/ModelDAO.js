@@ -108,10 +108,14 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
-    const { type, style, category } = datosModelo;
+    let { type, style, category } = datosModelo;
     if (!type || !style || !category) {
         return { status: 400, mensaje: "Falta tipo, estilo y/o categoría" };
     }
+
+    type = type.toUpperCase();
+    style = style.toUpperCase().split(",");
+    category = category.toUpperCase().split(",");
 
     try {
         const tipo = Type.findAll({
@@ -129,10 +133,11 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
                 category,
             },
         });
+
         const [
             [{ idType } = { idType: -1 }],
-            [{ idPredefinedStyle } = { idPredefinedStyle: -1 }],
-            [{ idCategory } = { idCategory: -1 }],
+            estilos,
+            categorias,
         ] = await Promise.all([tipo, estilo, categoria]);
 
         if (idType === -1) {
@@ -142,17 +147,17 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             };
         }
 
-        if (idPredefinedStyle === -1) {
+        if (estilos.length === 0 || estilos.length !== style.length) {
             return {
                 status: 400,
-                mensaje: `No existe el estilo ${style}`,
+                mensaje: "No existe alguno de los estilos o todos",
             };
         }
 
-        if (idCategory === -1) {
+        if (categorias.length === 0 || categorias.length !== category.length) {
             return {
                 status: 400,
-                mensaje: `No existe la categoría ${category}`,
+                mensaje: "No existe alguna de las categorias o todas",
             };
         }
 
@@ -167,15 +172,23 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
 
         const { idModel } = nuevoModelo;
 
+        const nuevasCategorias = categorias.map(({ idCategory }) => ({
+            Model_idModel: idProvider,
+            Category_idCategory: idCategory,
+        }));
+
+        console.log(nuevasCategorias);
+
+        const nuevosEstilos = estilos.map(({ idPredefinedStyle }) => ({
+            Model_idModel: idProvider,
+            PredefinedStyle_idPredefinedStyle: idPredefinedStyle,
+        }));
+
+        console.log(nuevosEstilos);
+
         await Promise.all([
-            ModelHasCategory.create({
-                Model_idModel: idModel,
-                Category_idCategory: idCategory,
-            }),
-            ModelHasPredefinedStyle.create({
-                Model_idModel: idModel,
-                PredefinedStyle_idPredefinedStyle: idPredefinedStyle,
-            }),
+            ModelHasCategory.bulkCreate(nuevasCategorias),
+            ModelHasPredefinedStyle.bulkCreate(nuevosEstilos),
         ]);
 
         if (modelo3d) {
