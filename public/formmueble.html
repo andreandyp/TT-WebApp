@@ -22,7 +22,7 @@
 
             <!-- Brand -->
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <h2><img src="img/Logo-AXdecor_transparente.svg" class="d-inline-block"style="height: 40px; width: 40px;">AxDecor</h2>
+                <img src="img/Logo-AXdecor_transparente.svg" class="d-inline-block"style="height: 30px; width: 30px;">AxDecor
             </a>
 
             <!-- Toggler -->
@@ -111,7 +111,7 @@
                 <input type="text" class="form-control" id="identificador" placeholder="" value="" required>
               </div>
             <div class="col-md-6 mb-3">
-              <label for="Nombre">Nombre/Modelo</span></label>
+              <label for="Nombre">Nombre</span></label>
               <input type="text" class="form-control" id="nombre" placeholder="" value="" required="">
             </div>
             </div>
@@ -124,35 +124,78 @@
             </div>
             <hr class="mb-4">
            
-            	<div class="row ">
-              		<div class="col-md-3 mb-3 mx-auto">
+            	<div class="row">
+              <div class="col-md-2 mb-3 mx-auto">
                 <label for="precio">Precio</label>
                 <input type="number" class="form-control" id="precio" placeholder="" value="" required>
               </div>
+              <div class="col-md-2 mb-3 mx-auto">
+                <label for="medidas">Medidas (cm)</label>
+                <input type="text" class="form-control" id="medidas" placeholder="00x00x00" value="" required>
+              </div>
+              <div class="col-md-2 mb-3 mx-auto">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" placeholder="" value="" required>
+              </div>
+              </div>
+              <div class="row">
               <div class="col-md-4 mb-3 mx-auto">
-                <label for="tipo">¿A qué categoría corresponde?</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Elige</option>
-                  <option>Iluminación</option>
-                  <option>Piso</option>
-                  <option>Muebles</option>
-                  <option>Pintura</option>
-                  <option>Decoración</option>
-                </select>
+                <h4 class="mb-3">¿A qué categoría corresponde?</h4>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="iluminacion">
+                  <label class="custom-control-label" for="iluminacion">Iluminación</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="piso">
+                  <label class="custom-control-label" for="piso">Piso</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="muebles">
+                  <label class="custom-control-label" for="muebles">Muebles</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="pintura">
+                  <label class="custom-control-label" for="pintura">Pintura</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="decoracion">
+                  <label class="custom-control-label" for="decoracion">Decoración</label>
+                </div>
               </div>
               <div class="col-md-4 mb-3 mx-auto">
-                <label for="style">¿Qué estilo es?</label>
-                <select class="custom-select d-block w-100" id="style" required>
-                  <option value="">Elige</option>
-                  <option>Minimalista</option>
-                  <option>Moderno</option>
-                  <option>Rústico</option>
-                  <option>Clásico</option>
-                  <option>Vintage</option>
-                  <option>Industrial</option>
-                  <option>Barroco</option>
-                  <option>Otro</option>
-                </select>
+                <h4 class="mb-3">¿Qué estilo es?</h4>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="minimalista">
+                  <label class="custom-control-label" for="minimalista">Minimalista</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="moderno">
+                  <label class="custom-control-label" for="moderno">Moderno</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="rustico">
+                  <label class="custom-control-label" for="rustico">Rústico</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="clasico">
+                  <label class="custom-control-label" for="clasico">Clásico</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="vintage">
+                  <label class="custom-control-label" for="vintage">Vintage</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="industrial">
+                  <label class="custom-control-label" for="industrial">Industrial</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="barroco">
+                  <label class="custom-control-label" for="barroco">Barroco</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="otro">
+                  <label class="custom-control-label" for="otro">Otro</label>
+                </div>
               </div>
              </div>
         
@@ -238,5 +281,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/scripts/formmueble.js"></script>
   </body>
 </html>

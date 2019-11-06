@@ -12,7 +12,8 @@
         "$": true,
         "axios": true,
         "document": true,
-        "alert": true
+        "alert": true,
+        "FormData": true
     },
     "parserOptions": {
         "ecmaVersion": 2018
