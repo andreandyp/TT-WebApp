@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "nodemon": "nodemon ./bin/www --ignore node_modules/"
+        "nodemon": "nodemon ./bin/www --ignore node_modules/ --ignore public/"
     },
     "engines": {
         "node": ">=10.16.0",

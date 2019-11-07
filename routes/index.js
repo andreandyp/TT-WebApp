@@ -49,6 +49,18 @@ router.get("/formmueble", (req, res) => {
     res.render("formmueble.html");
 });
 
+router.get("/visualizarmodelos", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("visualizarmodelos.html");
+});
+
 router.get("/", (req, res) => {
     res.render("index.html");
 });

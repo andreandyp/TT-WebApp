@@ -67,7 +67,8 @@ document
 
         try {
             await axios.post("/modelos", formData);
-            window.location.replace("/proveedores.html");
+            alert("Subiendo modelo...");
+            window.location.replace("/visualizarmodelos");
         } catch (error) {
             alert(error.response.data);
         }

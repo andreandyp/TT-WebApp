@@ -72,6 +72,7 @@ async function obtenerModelos(idProvider) {
                 "name",
                 "fileAR",
                 "price",
+                "color",
                 "description",
                 "file2D",
                 "medidas",
@@ -107,6 +108,29 @@ async function obtenerModelos(idProvider) {
                 },
             ],
         });
+
+        const firebaseStorage = firebase.bucket();
+
+        for (const modelo of modelos) {
+            if (modelo.fileAR) {
+                var [urlAR] = await firebaseStorage
+                    .file(modelo.fileAR)
+                    .getSignedUrl({
+                        action: "read",
+                        expires: Date.now() + 3600000, // 1 hora 😅
+                    });
+            }
+
+            const [url2D] = await firebaseStorage
+                .file(modelo.file2D)
+                .getSignedUrl({
+                    action: "read",
+                    expires: Date.now() + 3600000, // 1 hora 😅
+                });
+
+            modelo.fileAR = urlAR;
+            modelo.file2D = url2D;
+        }
 
         return { status: 200, mensaje: modelos };
     } catch (error) {
