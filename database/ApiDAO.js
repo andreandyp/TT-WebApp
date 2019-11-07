@@ -8,6 +8,7 @@ const {
     Store,
     Paint,
 } = require("../config/db");
+const { Op } = require("sequelize");
 const firebase = require("../config/firebase");
 
 async function obtenerModelos() {
@@ -27,6 +28,7 @@ async function obtenerModelos() {
                 "updatedAt",
                 "Provider_idProvider",
             ],
+            order: [["idProvider", "ASC"]],
             include: [
                 {
                     model: PredefinedStyle,
@@ -99,6 +101,12 @@ async function obtenerProveedores() {
                 "persona",
                 "rango",
             ],
+            where: {
+                razonSocial: {
+                    [Op.ne]: null,
+                },
+            },
+            order: [["idProvider", "ASC"]],
             include: [
                 {
                     model: SocialNetwork,

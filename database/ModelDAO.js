@@ -134,7 +134,8 @@ async function obtenerModelos(idProvider) {
 
         return { status: 200, mensaje: modelos };
     } catch (error) {
-        return { status: 500, mensaje: error };
+        console.log(error);
+        return { status: 500, mensaje: error.toString() };
     }
 }
 

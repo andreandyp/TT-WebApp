@@ -46,7 +46,7 @@ async function iniciarAdmin(req, usuario, contraseña, done) {
 async function iniciarProveedor(req, usuario, contraseña, done) {
     try {
         const [provider] = await Provider.findAll({
-            attributes: ["idProvider", "username", "password"],
+            attributes: ["idProvider", "username", "password", "razonSocial"],
             where: {
                 username: {
                     [Op.iRegexp]: `^${usuario}$`,
@@ -75,9 +75,11 @@ async function iniciarProveedor(req, usuario, contraseña, done) {
             );
         }
 
+        const completo = provider.razonSocial ? true : false;
+
         const { idProvider: _id, username } = provider;
 
-        done(null, { _id, username, role: "provider" });
+        done(null, { _id, username, role: "provider", completo });
     } catch (error) {
         done(error, false);
     }
@@ -87,14 +89,22 @@ async function buscarPorID(datos, done) {
     try {
         if (datos.role === "provider") {
             const [resultados] = await Provider.findAll({
-                attributes: ["idProvider", "username", "name"],
+                attributes: ["idProvider", "username", "name", "razonSocial"],
                 where: {
                     idProvider: datos._id,
                 },
                 raw: true,
             });
 
-            return done(null, { ...resultados, role: datos.role });
+            const completo = resultados.razonSocial ? true : false;
+            const { idProvider, username } = resultados;
+
+            return done(null, {
+                idProvider,
+                username,
+                role: "provider",
+                completo,
+            });
         }
 
         const [resultados] = await Administrator.findAll({
