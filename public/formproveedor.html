@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="style_Axdecor.css">
 	<link rel="stylesheet" href="css/animate.css">
@@ -36,7 +37,7 @@
                 <!-- Links -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/">
+                        <a class="nav-link js-scroll-trigger" href="AXdecor.html">
                          Inicio
                         </a>
                     </li>
@@ -97,88 +98,76 @@
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
-        <p class="lead">Sube tus modelos</p>
+        <p class="lead">Ingresa tus datos y sube tus modelos</p>
       </div>
 
       <div class="row">
-        <!--
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-              <div class="text-success">
-                <h6 class="my-0">Promo code</h6>
-                <small>EXAMPLECODE</small>
-              </div>
-              <span class="text-success">-$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
-            </li>
-          </ul>
-
-          <form class="card p-2">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Promo code">
-              <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
-              </div>
-            </div>
-          </form>
-        </div> -->
-        <div class="col-md-10 order-md-1">
+        <div class="col-md-12 order-md-1">
           <h4 class="mb-3">Razón social</h4>
-          <form class="needs-validation" novalidate>
+          <form class="form-proveedor">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">¿Cuál es la razón social del proveedor?</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Valid first name is required.
-                </div>
+                <input type="text" class="form-control" id="razonsocial" placeholder="" value="" required>
               </div>
-            </div>
-
-
-            <div class="mb-3">
+            <div class="col-md-6 mb-3">
               <label for="RFC">RFC <span class="text-muted"></span></label>
               <input type="" class="form-control" id="RFC" placeholder="" value="" required="">
-              <div class="invalid-feedback">
-                Ingresa un RFC válido
-              </div>
+            </div>
+            </div>
+      <hr class="mb-4">
+<div class="panel panel-default">
+  <h4 class="mb-1">Tiendas</h4>
+      <div id="num_tiendas"></div>
+          <div class="row">
+            <div class="col-sm-5 mb-3">
+              <div class="form-group">
+              <label for="address">Dirección</label>
+              <input type="text" class="form-control" id="address" name="address[]"placeholder="" required>
+            </div>
             </div>
 
-            <div class="mb-3">
-              <label for="address">Dirección</label>
-              <input type="text" class="form-control" id="address" placeholder="" required>
-              <div class="invalid-feedback">
-              </div>
+            <div class="col-sm-3 mb-3">
+              <div class="form-group">
+              <label for="address">Número telefónico</label>
+              <input type="tel" class="form-control" id="telefono" name="telefono[]" placeholder="" required>
             </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+              <div class="form-group">
+                <label for="address">Correo electrónico</label>
+                <div class="input-group">  
+              <input type="email" class="form-control" id="email" name="email[]" placeholder="usuario@escom.ipn" required>
+              <div class="input-group-btn">
+                  <button class="btn btn-success " type="button"  onclick="num_tiendas();"><span class="icon ion-md-add" aria-hidden="true"></span> 
+                  </button>
+            </div>
+        </div>
+            </div>
+            </div>
+         </div>
+  </div>
+          
+<script type="text/javascript">
+   var rom = 1;
+    function num_tiendas() {
+ 
+    rom++;
+    var objTo = document.getElementById('num_tiendas')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "form-group removeclass"+rom);
+    var rdiv = 'removeclass'+rom;
+    divtest.innerHTML = '<div class="row"><div class="col-sm-5 mb-3"><div class="form-group"><label for="address">Dirección</label><input type="text" class="form-control" id="address" name="address[]"placeholder="" required></div></div><div class="col-sm-3 mb-3"><div class="form-group"><label for="address">Número telefónico</label><input type="tel" class="form-control" id="telefono" name="telefono[]" placeholder="" required></div></div><div class="col-sm-4 mb-3"><div class="form-group"><label for="address">Correo electrónico</label><div class="input-group"><input type="email" class="form-control" id="email" name="email[]" placeholder="usuario@escom.ipn" required><div class="input-group-btn"><button class="btn btn-danger " type="button"  onclick="remove_num_tiendas('+rom+');"><span class="icon ion-md-remove" aria-hidden="true"></span></button></div></div></div></div></div>';
+    
+    objTo.appendChild(divtest)
+}
+   function remove_num_tiendas(rid) {
+     $('.removeclass'+rid).remove();
+   }
+
+</script>
+
+            <hr class="mb-4">
 
             <div class="row">
               <div class="col-md-4 mb-3">
@@ -191,9 +180,6 @@
                   <option>Pintura</option>
                   <option>Decoración</option>
                 </select>
-                <div class="invalid-feedback">
-                  Elige una opción
-                </div>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="persona">Persona</label>
@@ -202,9 +188,6 @@
                   <option>Física</option>
                   <option>Moral</option>
                 </select>
-                <div class="invalid-feedback">
-                    Elige una de las opciones
-                </div>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="presupuesto">Categoría de presupuesto</label>
@@ -219,15 +202,15 @@
                 </div>
               </div>
             </div>
-            <hr class="mb-4">
+<!-- Métodos de pago  
             <h4 class="mb-3">Métodos de pago (Cómo pueden pagar tus clientes)</h4>
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjeta">
-              <label class="custom-control-label" for="tarjeta">Tarjeta de crédito</label>
+              <input type="checkbox" class="custom-control-input" id="tarjetac">
+              <label class="custom-control-label" for="tarjetac">Tarjeta de crédito</label>
             </div>
              <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjeta">
-              <label class="custom-control-label" for="tarjeta">Tarjeta de débito</label>
+              <input type="checkbox" class="custom-control-input" id="tarjetad">
+              <label class="custom-control-label" for="tarjetad">Tarjeta de débito</label>
             </div>
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="contado">
@@ -235,23 +218,66 @@
             </div>
             <hr class="mb-4">
 
+<!--Agregar redes sociales --->
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Redes sociales</div>
+        <div class="panel-body">
+          <div id="redes_sociales"></div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social">
+                </div>
+              </div>    
+                    <div class="input-group-btn">
+                        <button class="btn btn-success " type="button"  onclick="redes_sociales();">     <span class="icon ion-md-add" aria-hidden="true"></span> 
+                        </button>
+                    </div>
+            </div>
+        </div>
+      </div>
+      
             
-            
-            <hr class="mb-4">
-            <input name="submit" type="submit" class="btn btn-outline-dark btn-lg btn-block" value="Enviar">
+        <hr class="mb-4">
+          <div class="row">
+              <div class="col-md-4 mb-3 mx-auto">
+                <input name="submit" type="submit" class="btn btn-outline-success btn-md btn-block" value="Enviar">
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <a href="" class="btn btn-outline-danger btn-md btn-block">Salir</a>
+              </div>
+          </div>
             <hr class="mb-4">
           </form>
         </div>
       </div>
+    </div>
 
 
+<script type="text/javascript">
+   var room = 1;
+    function redes_sociales() {
+ 
+    room++;
+    var objTo = document.getElementById('redes_sociales')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "form-group removeclass"+room);
+    var rdiv = 'removeclass'+room;
+    divtest.innerHTML = '<div class="row"><div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social"></div></div><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_redes_sociales('+ room +');"> <span class="icon ion-md-remove" aria-hidden="true"></span> </button></div></div></div></div></div>';
+    
+    objTo.appendChild(divtest)
+}
+   function remove_redes_sociales(rid) {
+     $('.removeclass'+rid).remove();
+   }
+
+</script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/js/scripts/formproveedor.js"></script>
   </body>
 </html>
