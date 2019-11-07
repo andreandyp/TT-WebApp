@@ -170,55 +170,50 @@
             <hr class="mb-4">
 
             <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="proveedor">Tipo de proveedor</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Elige</option>
-                  <option>Iluminación</option>
-                  <option>Piso</option>
-                  <option>Muebles</option>
-                  <option>Pintura</option>
-                  <option>Decoración</option>
-                </select>
+              <div class="col-md-4 mb-3 mx-auto">
+                <h4 class="mb-3">Tipo de proveedor</h4>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="iluminacion" value="iluminacion">
+                  <label class="custom-control-label" for="iluminacion">Iluminación</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="piso" value="pisos">
+                  <label class="custom-control-label" for="piso">Pisos</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="muebles" value="muebles">
+                  <label class="custom-control-label" for="muebles">Muebles</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="pintura" value="pintura">
+                  <label class="custom-control-label" for="pintura">Pintura</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="decoracion" value="decoracion">
+                  <label class="custom-control-label" for="decoracion">Decoración</label>
+                </div>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="persona">Persona</label>
-                <select class="custom-select d-block w-100" id="state" required>
+                <select class="custom-select d-block w-100" id="persona" required>
                   <option value="">Elige</option>
-                  <option>Física</option>
-                  <option>Moral</option>
+                  <option value="FISICA">Física</option>
+                  <option value="MORAL">Moral</option>
                 </select>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="presupuesto">Categoría de presupuesto</label>
                 <select class="custom-select d-block w-100" id="presupuesto" required>
                   <option value="">Elige</option>
-                  <option>Bajo</option>
-                  <option>Medio</option>
-                  <option>Alto</option>
+                  <option value="BAJO">Bajo</option>
+                  <option value="MEDIO">Medio</option>
+                  <option value="ALTO">Alto</option>
                 </select>
                 <div class="invalid-feedback">
                     Elige una de las opciones
                 </div>
               </div>
             </div>
-<!-- Métodos de pago  
-            <h4 class="mb-3">Métodos de pago (Cómo pueden pagar tus clientes)</h4>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjetac">
-              <label class="custom-control-label" for="tarjetac">Tarjeta de crédito</label>
-            </div>
-             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="tarjetad">
-              <label class="custom-control-label" for="tarjetad">Tarjeta de débito</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="contado">
-              <label class="custom-control-label" for="contado">Contado</label>
-            </div>
-            <hr class="mb-4">
-
-<!--Agregar redes sociales --->
 
     <div class="panel panel-default">
       <div class="panel-heading">Redes sociales</div>
@@ -245,7 +240,7 @@
                 <input name="submit" type="submit" class="btn btn-outline-success btn-md btn-block" value="Enviar">
               </div>
               <div class="col-md-4 mb-3 mx-auto">
-                <a href="" class="btn btn-outline-danger btn-md btn-block">Salir</a>
+                <a href="" class="btn btn-outline-danger btn-md btn-block" id="cerrarSesion">Salir</a>
               </div>
           </div>
             <hr class="mb-4">
@@ -279,5 +274,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/scripts/formproveedor.js"></script>
   </body>
 </html>

@@ -2,7 +2,10 @@ var file3D, file2D;
 
 $(document).ready(async () => {
     try {
-        await axios.get("/auth/activo");
+        const res = await axios.get("/auth/activo");
+        if (!res.data.completo) {
+            return window.location.replace("/formproveedor");
+        }
     } catch (error) {
         window.location.replace("/");
     }
@@ -17,6 +20,17 @@ $(document).ready(async () => {
     modelo2d.onchange = function() {
         file2D = modelo2d.files[0];
     };
+
+    document
+        .querySelector("#cerrarSesion")
+        .addEventListener("click", async e => {
+            e.preventDefault();
+            const salir = window.confirm("¿Cerrar sesión?");
+            if (salir) {
+                await axios.get("/auth/salir");
+                window.location.replace("/");
+            }
+        });
 });
 
 document
