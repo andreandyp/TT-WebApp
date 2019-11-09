@@ -8,7 +8,7 @@ document.querySelector(".form-signin").addEventListener("submit", async e => {
     try {
         const res = await axios.post("/auth/loginProvider", data);
         if (res.data.completo) {
-            return window.location.replace("/visualizarmodelos");
+            return window.location.replace("/visualizarinfoproveedor");
         }
 
         window.location.replace("/formproveedor");

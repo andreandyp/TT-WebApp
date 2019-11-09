@@ -1,9 +1,16 @@
+var logo;
 $(document).ready(async () => {
     try {
         await axios.get("/auth/activo");
     } catch (error) {
         window.location.replace("/");
     }
+
+    const logoElem = document.querySelector("#logo");
+
+    logoElem.onchange = function() {
+        logo = logoElem.files[0];
+    };
 
     document
         .querySelector(".form-proveedor")
@@ -12,19 +19,14 @@ $(document).ready(async () => {
 
             const razonSocial = document.querySelector("#razonsocial").value;
             const RFC = document.querySelector("#RFC").value;
-            const description = document.querySelector("#desc").value;
-            const codigo = document.querySelector("#identificador").value;
-            const medidas = document.querySelector("#medidas").value;
-            const color = document.querySelector("#color").value;
+            const tipo;
+            const persona;
+            const categoria
 
             const formData = new FormData();
 
             formData.append("razonSocial", razonSocial);
             formData.append("rfc", RFC);
-            formData.append("description", description);
-            formData.append("codigo", codigo);
-            formData.append("medidas", medidas);
-            formData.append("color", color);
 
             const categorias = Array.from(
                 document.querySelectorAll(".categoria")
