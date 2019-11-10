@@ -9,6 +9,8 @@ async function obtenerPinturas(idProvider) {
                 "vendorCode",
                 "rgbCode",
                 "hexCode",
+                "price",
+                "presentacion",
                 "Provider_idProvider",
             ],
             where: {
@@ -37,6 +39,8 @@ async function obtenerPintura(idPaint, idProvider) {
                 "vendorCode",
                 "rgbCode",
                 "hexCode",
+                "price",
+                "presentacion",
                 "Provider_idProvider",
             ],
             where: {
@@ -59,8 +63,22 @@ async function obtenerPintura(idPaint, idProvider) {
 
 async function añadirPintura({ datosPintura, idProvider }) {
     try {
-        const { name, vendorCode, rgbCode, hexCode } = datosPintura;
-        if (!name || !vendorCode || (!rgbCode && !hexCode)) {
+        const {
+            name,
+            vendorCode,
+            rgbCode,
+            hexCode,
+            price,
+            presentacion,
+        } = datosPintura;
+        if (
+            !name ||
+            !vendorCode ||
+            !price ||
+            !presentacion ||
+            (!rgbCode && !hexCode)
+        ) {
+            console.log(idProvider);
             return {
                 status: 400,
                 mensaje: "Faltan datos de la pintura",
@@ -72,19 +90,12 @@ async function añadirPintura({ datosPintura, idProvider }) {
             vendorCode,
             rgbCode,
             hexCode,
+            price,
+            presentacion,
             Provider_idProvider: idProvider,
         });
 
-        return {
-            status: 200,
-            mensaje: {
-                idPaint,
-                vendorCode,
-                rgbCode,
-                hexCode,
-                Provider_idProvider: idProvider,
-            },
-        };
+        return await obtenerPintura(idPaint, idProvider);
     } catch (error) {
         return {
             status: 500,
@@ -95,7 +106,15 @@ async function añadirPintura({ datosPintura, idProvider }) {
 
 async function modificarPintura({ datosPintura, idProvider }) {
     try {
-        const { idPaint, name, vendorCode, rgbCode, hexCode } = datosPintura;
+        const {
+            idPaint,
+            name,
+            vendorCode,
+            rgbCode,
+            hexCode,
+            price,
+            presentacion,
+        } = datosPintura;
 
         await Paint.update(
             {
@@ -103,6 +122,8 @@ async function modificarPintura({ datosPintura, idProvider }) {
                 vendorCode,
                 rgbCode,
                 hexCode,
+                price,
+                presentacion,
             },
             {
                 where: {
