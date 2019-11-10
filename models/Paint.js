@@ -19,6 +19,12 @@ function init(sequelize, Sequelize) {
             hexCode: {
                 type: Sequelize.STRING,
             },
+            price: {
+                type: Sequelize.STRING,
+            },
+            presentacion: {
+                type: Sequelize.STRING,
+            },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
