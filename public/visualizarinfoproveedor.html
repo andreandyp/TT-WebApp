@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/fonts.css">
 
-    <title>Mis modelos</title>
+    <title>Mi info</title>
   </head>
 
 <body id="page-top">
@@ -81,7 +81,7 @@
                         
                         <!-- Heading -->
                         <h1 class="text-white text-center mb-4 display-4 font-weight-bold">
-                            AxDecor<br>¡Hola Proveedor!, aquí están tus modelos
+                            AxDecor<br>¡Hola Proveedor!
                         </h1>
                     </div>
                 </div>
@@ -92,47 +92,94 @@
     </section>
 
   <body class="bg-light">
-    <div class="container">
+    <div class="container" id="app">
       <div class="text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
-        <p class="lead">Tus modelos son...</p>
+        <p class="lead">Tus datos son...</p>
       </div>
 
+
      <!--Cards--> 
+    <div class="row">
+  	<div class="col-md-6">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-2"><i class="icon ion-md-create"></i>
+          Razón social: {{datosProveedor.razonSocial}}</strong>
+          <strong class="d-inline-block mb-2"><i class="icon ion-md-list"></i>
+          RFC: {{datosProveedor.rfc}}</strong>
+          <strong class="d-inline-block mb-2"><i class="icon ion-md-brush"></i>
+          Categorías de proveedor: {{datosProveedor.categories | verCategorias}}</strong>
+          <strong class="d-inline-block mb-2"><i class="icon ion-md-body"></i>
+          Persona: {{datosProveedor.persona}}</strong>
+          <strong class="d-inline-block mb-2"><i class="icon ion-logo-usd"></i>
+          Rango de presupuesto: {{datosProveedor.rango}}</strong>
+        </div>
+      </div>
+    </div>
+        <div class="col-md-6">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-2 d-flex flex-column position-static">
+          <h4 class="mb-1 mx-auto"><i class="icon ion-md-star"></i>
+          Redes sociales</h4>
+            <hr class="mb-1">
+            <div v-for="red in datosProveedor.socialnetworks">
+              <a :href="red.socialNetworkUrl" class="mb-1 mx-auto"><i class="icon ion-md-link"></i> {{red.socialNetworkUrl}}</a>
+            </div>
+        </div>
+  </div>
+</div>
+  </div>
+  <div class="row">
+  <div class="col-md-12">
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-2 text-center">
+          <h4 class="mb-1 mx-auto"><i class="icon ion-md-map"></i> Tiendas</h4>
+          <hr class="mb-1">
+          <div class="row text-center" v-for="tienda in datosProveedor.stores">
+          <div class="col-md-4">
+            <h4 class="mb-1 mx-auto"><i class="icon ion-md-pin"></i> Ubicación:</h4>
+              <p>{{tienda.address}}</p>
+          </div>
+          <div class="col-md-4">
+            <h4 class="mb-1 mx-auto"><i class="icon ion-md-keypad"></i>  Teléfono:</h4>
+              <p>{{tienda.phone || "N/A"}}</p>
+          </div>
+          <div class="col-md-4">
+            <h4 class="mb-1 mx-auto"><i class="icon ion-ios-at"></i> Correo electrónico:</h4>
+              <p>{{tienda.email || "N/A"}}</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
 
-  	<div class="card-deck mb-3 text-center" id="app">
-  		<div class="col-md-4" v-for="modelo in modelos">
-    		<div class="card mb-4 shadow-sm">
-      			<div class="card-header">
-        			<h4 class="my-0 font-weight-normal">{{modelo.name}}</h4>
-      			</div>
-      			<div class="card-body">
-      				<img :src="modelo.file2D" class="card-img-top" alt="...">
-        			<h4 class="card-title pricing-card-title">Precio: ${{modelo.price}} MXN</h4>
-        				<ul class="list-unstyled mt-3 mb-4">
-        					<li>Código: {{modelo.codigo || "N/A"}}</li>
-          					<li>Medidas: {{modelo.medidas || "N/A"}}</li>
-          					<li>Color: {{modelo.color}}</li>
-          					<li>Estilo: {{modelo.predefinedstyles | verEstilos}}</li>
-          					<li>Habitación: {{modelo.types | verTipos}}</li>
-        				</ul>
-        				<p class="card-text mb-auto">{{modelo.description}}</p>
-        				<p><a class="btn btn-outline-danger mt-3" href="#" role="button" id="eliminarModelo" @click.prevent="eliminarModelo(modelo.idModel)">Eliminar</a></p>
-        		</div>
-    		</div>
-    	</div>
-	</div>
+</div>
 
-	<!--Botón de salir-->
+
+
+	<!--Botones-->
 	<hr class="mb-4">
+
           <div class="row">
-              <div class="col-md-4 mb-3 mx-auto">
+              <div class="col-md-3 mb-3 mx-auto">
+                <a href="" class="btn btn-info btn-md btn-block">Editar</a>
+              </div>
+              <div class="col-md-3 mb-3 mx-auto">
+                <a href="/visualizarmodelos" class="btn btn-info btn-md btn-block">Ver modelos</a>
+              </div>
+              <div class="col-md-3 mb-3 mx-auto">
+                <a href="/formmueble" class="btn btn-info btn-md btn-block">Subir modelos</a>
+              </div>
+              <div class="col-md-3 mb-3 mx-auto">
                 <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
               </div>
           </div>
-            <hr class="mb-4">
+          <hr class="mb-4">
+</div>
 
+        
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -142,6 +189,6 @@
     <script src="js/theme.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script src="js/scripts/visualizarmodelos.js"></script>
+    <script src="js/scripts/visualizarinfoproveedor.js"></script>
   </body>
 </html>

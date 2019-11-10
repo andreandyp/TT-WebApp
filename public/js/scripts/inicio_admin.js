@@ -7,7 +7,7 @@ document.querySelector(".form-signin").addEventListener("submit", async e => {
 
     try {
         await axios.post("/auth/loginAdmin", data);
-        window.location.replace("/formadministrador");
+        window.location.replace("/misproveedores");
     } catch (error) {
         alert(error.response.data);
     }

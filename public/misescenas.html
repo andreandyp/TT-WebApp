@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="style_Axdecor.css">
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/fonts.css">
 
-    <title>Mis modelos</title>
+    <title>Mis escenas</title>
   </head>
 
 <body id="page-top">
@@ -96,41 +96,79 @@
       <div class="text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
-        <p class="lead">Tus modelos son...</p>
+        <p class="lead">¿Agrega una escena a uno de nuestros estilos?...</p>
+        <p>Solo tienes que seleccionar los modelos.</p>
       </div>
 
      <!--Cards--> 
+     <hr class="mb-4">
+     <div class="row">
+               <div class="col-md-4 mb-3 mx-auto">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="" value="" required>
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <label for="proveedor">¿A qué estilo pertenece?</label>
+                <select class="custom-select d-block w-100" id="country" required>
+                  <option value="">Elige</option>
+                  <option>Minimalista</option>
+                  <option>Moderno</option>
+                  <option>Rústico</option>
+                  <option>Clásico</option>
+                  <option>Vintage</option>
+                  <option>Industrial</option>
+                  <option>Barroco</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <label for="proveedor">¿Qué habitación es?</label>
+                <select class="custom-select d-block w-100" id="country" required>
+                  <option value="">Elige</option>
+                  <option>Baño</option>
+                  <option>Sala</option>
+                  <option>Comedor</option>
+                  <option>Cocina</option>
+                  <option>Recámara</option>
+                </select>
+              </div>
+      </div>
 
-  	<div class="card-deck mb-3 text-center" id="app">
-  		<div class="col-md-4" v-for="modelo in modelos">
+      <hr class="mb-4">
+  	<div class="card-deck mb-3 text-center">
+  		<div class="col-md-4">
     		<div class="card mb-4 shadow-sm">
       			<div class="card-header">
-        			<h4 class="my-0 font-weight-normal">{{modelo.name}}</h4>
+        			<h4 class="my-0 font-weight-normal">Dolche naranja sillón</h4>
       			</div>
       			<div class="card-body">
-      				<img :src="modelo.file2D" class="card-img-top" alt="...">
-        			<h4 class="card-title pricing-card-title">Precio: ${{modelo.price}} MXN</h4>
+      				<img src="img/sillón_1.png" class="card-img-top" alt="...">
+        			<h4 class="card-title pricing-card-title">Precio: $2379.00 MXN</h4>
         				<ul class="list-unstyled mt-3 mb-4">
-        					<li>Código: {{modelo.codigo || "N/A"}}</li>
-          					<li>Medidas: {{modelo.medidas || "N/A"}}</li>
-          					<li>Color: {{modelo.color}}</li>
-          					<li>Estilo: {{modelo.predefinedstyles | verEstilos}}</li>
-          					<li>Habitación: {{modelo.types | verTipos}}</li>
+        					<li>Código: TAP16904S1_AG</li>
         				</ul>
-        				<p class="card-text mb-auto">{{modelo.description}}</p>
-        				<p><a class="btn btn-outline-danger mt-3" href="#" role="button" id="eliminarModelo" @click.prevent="eliminarModelo(modelo.idModel)">Eliminar</a></p>
+        				<div class="custom-control custom-checkbox">
+               			<input type="checkbox" class="custom-control-input tipo" id="sillón" value="baño">
+                	<label class="custom-control-label" for="sillón">Agregar</label>
+             </div>
+        			
         		</div>
     		</div>
     	</div>
+
 	</div>
 
 	<!--Botón de salir-->
 	<hr class="mb-4">
           <div class="row">
               <div class="col-md-4 mb-3 mx-auto">
-                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
+                <a href="" class="btn btn-success btn-md btn-block">Subir</a>
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <a href="" class="btn btn-danger btn-md btn-block">Salir</a>
               </div>
           </div>
+
             <hr class="mb-4">
 
 
@@ -140,8 +178,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script src="js/scripts/visualizarmodelos.js"></script>
   </body>
 </html>

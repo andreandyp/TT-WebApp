@@ -10,15 +10,21 @@ const {
 const {
     actualizarInfoProveedor,
     corregirInfoProveedor,
+    obtenerInfo,
 } = require("../database/ProviderDAO");
 
 const { esAdmin, esProveedor, estaAutentificado } = require("../util/util");
 
 router.use(estaAutentificado);
 
-router.get("/", esAdmin, async (req, res) => {
-    const resultado = await obtenerTodosProveedores();
-    res.status(resultado.status).send(resultado.mensaje);
+router.get("/", async (req, res) => {
+    if (req.user.role === "admin") {
+        const resultado = await obtenerTodosProveedores();
+        res.status(resultado.status).send(resultado.mensaje);
+    } else {
+        const resultado = await obtenerInfo(req.user.idProvider);
+        res.status(resultado.status).send(resultado.mensaje);
+    }
 });
 
 router.get("/:idProvider", esAdmin, async (req, res) => {
