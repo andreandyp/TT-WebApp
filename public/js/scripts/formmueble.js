@@ -80,8 +80,8 @@ document
         formData.append("style", estilos.join(","));
 
         try {
+            alert("Subiendo modelo, espera un poco...");
             await axios.post("/modelos", formData);
-            alert("Subiendo modelo...");
             window.location.replace("/visualizarmodelos");
         } catch (error) {
             alert(error.response.data);

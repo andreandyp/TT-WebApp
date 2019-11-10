@@ -21,9 +21,25 @@ router.get("/proveedores", (req, res) => {
     res.render("proveedores.html");
 });
 
+router.get("/misproveedores", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "admin") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("misproveedores.html");
+});
+
 router.get("/formadministrador", (req, res) => {
     if (!req.isAuthenticated()) {
         return res.redirect("/");
+    }
+
+    if (req.user.role !== "admin") {
+        return res.status(401).send("No puedes entrar aquí");
     }
 
     res.render("formadministrador.html");

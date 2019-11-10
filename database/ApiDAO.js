@@ -28,7 +28,7 @@ async function obtenerModelos() {
                 "updatedAt",
                 "Provider_idProvider",
             ],
-            order: [["idProvider", "ASC"]],
+            order: [["idModel", "ASC"]],
             include: [
                 {
                     model: PredefinedStyle,

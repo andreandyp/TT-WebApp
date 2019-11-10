@@ -106,15 +106,15 @@
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
           <strong class="d-inline-block mb-2"><i class="icon ion-md-create"></i>
-          Razón social:</strong>
+          Razón social: {{datosProveedor.razonSocial}}</strong>
           <strong class="d-inline-block mb-2"><i class="icon ion-md-list"></i>
-          RFC:</strong>
+          RFC: {{datosProveedor.rfc}}</strong>
           <strong class="d-inline-block mb-2"><i class="icon ion-md-brush"></i>
-          Tipo de proveedor:</strong>
+          Categorías de proveedor: {{datosProveedor.categories | verCategorias}}</strong>
           <strong class="d-inline-block mb-2"><i class="icon ion-md-body"></i>
-          Persona:</strong>
+          Persona: {{datosProveedor.persona}}</strong>
           <strong class="d-inline-block mb-2"><i class="icon ion-logo-usd"></i>
-          Categoría de presupuesto:</strong>
+          Rango de presupuesto: {{datosProveedor.rango}}</strong>
         </div>
       </div>
     </div>
@@ -124,7 +124,9 @@
           <h4 class="mb-1 mx-auto"><i class="icon ion-md-star"></i>
           Redes sociales</h4>
             <hr class="mb-1">
-            <a href="https://www.instagram.com/xanat_hernandez/?hl=es-la" class="mb-1 mx-auto"><i class="icon ion-md-link"></i> https://www.instagram.com/xanat_hernandez/?hl=es-la</a>
+            <div v-for="red in datosProveedor.socialnetworks">
+              <a :href="red.socialNetworkUrl" class="mb-1 mx-auto"><i class="icon ion-md-link"></i> {{red.socialNetworkUrl}}</a>
+            </div>
         </div>
   </div>
 </div>
@@ -135,18 +137,18 @@
         <div class="col p-2 text-center">
           <h4 class="mb-1 mx-auto"><i class="icon ion-md-map"></i> Tiendas</h4>
           <hr class="mb-1">
-          <div class="row text-center">
+          <div class="row text-center" v-for="tienda in datosProveedor.stores">
           <div class="col-md-4">
             <h4 class="mb-1 mx-auto"><i class="icon ion-md-pin"></i> Ubicación:</h4>
-              <p>Av. Ocho #154 Col. Valentín Gómez Farias C.P. 15010 México, CDMX</p>
+              <p>{{tienda.address}}</p>
           </div>
           <div class="col-md-4">
             <h4 class="mb-1 mx-auto"><i class="icon ion-md-keypad"></i>  Teléfono:</h4>
-              <p>57-85-41-50</p>
+              <p>{{tienda.phone || "N/A"}}</p>
           </div>
           <div class="col-md-4">
             <h4 class="mb-1 mx-auto"><i class="icon ion-ios-at"></i> Correo electrónico:</h4>
-              <p>aeropuerto@eltriunfo.com.mx</p>
+              <p>{{tienda.email || "N/A"}}</p>
           </div>
         </div>
         </div>
@@ -165,13 +167,13 @@
                 <a href="" class="btn btn-info btn-md btn-block">Editar</a>
               </div>
               <div class="col-md-3 mb-3 mx-auto">
-                <a href="" class="btn btn-info btn-md btn-block">Ver modelos</a>
+                <a href="/visualizarmodelos" class="btn btn-info btn-md btn-block">Ver modelos</a>
               </div>
               <div class="col-md-3 mb-3 mx-auto">
-                <a href="" class="btn btn-info btn-md btn-block">Subir modelos</a>
+                <a href="/formmueble" class="btn btn-info btn-md btn-block">Subir modelos</a>
               </div>
               <div class="col-md-3 mb-3 mx-auto">
-                <a href="" class="btn btn-danger btn-md btn-block">Salir</a>
+                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
               </div>
           </div>
           <hr class="mb-4">

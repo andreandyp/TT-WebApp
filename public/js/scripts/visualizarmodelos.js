@@ -6,6 +6,7 @@ $(document).ready(async () => {
         }
     } catch (error) {
         alert(error.response.data);
+        window.location.replace("/");
     }
 
     document
@@ -26,6 +27,21 @@ new Vue({
         return {
             modelos: [],
         };
+    },
+    methods: {
+        async eliminarModelo(id) {
+            try {
+                alert("Eliminando modelo...");
+                const { data } = await axios.delete(`/modelos/${id}`);
+                alert(data);
+                const models = this.$data.modelos;
+                this.$data.modelos = models.filter(model => {
+                    return model.idModel !== id;
+                });
+            } catch (error) {
+                alert(error);
+            }
+        },
     },
     filters: {
         verEstilos(estilos) {

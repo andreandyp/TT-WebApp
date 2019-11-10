@@ -142,7 +142,7 @@ async function obtenerModelos(idProvider) {
 async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
     const { name, price, description, color, codigo, medidas } = datosModelo;
 
-    if (!name || !price || !description || !color || !codigo || !medidas) {
+    if (!name || !price || !color || !codigo || !medidas) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
@@ -266,6 +266,7 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
 async function eliminarModelo(idModel, idProvider) {
     try {
         const [modeloAEliminar] = await Model.findAll({
+            attributes: ["fileAR", "file2D", "Provider_idProvider"],
             where: {
                 idModel,
             },
@@ -276,6 +277,20 @@ async function eliminarModelo(idModel, idProvider) {
             return { status: 400, mensaje: "Este modelo no es tuyo" };
         }
 
+        if (modeloAEliminar.fileAR) {
+            var file3d = firebase
+                .bucket()
+                .file(modeloAEliminar.fileAR)
+                .delete();
+        }
+        await Promise.all([
+            firebase
+                .bucket()
+                .file(modeloAEliminar.file2D)
+                .delete(),
+            file3d,
+        ]);
+
         await Model.destroy({
             where: {
                 idModel,
@@ -285,7 +300,8 @@ async function eliminarModelo(idModel, idProvider) {
 
         return { status: 200, mensaje: "Modelo eliminado" };
     } catch (error) {
-        return { status: 500, mensaje: error };
+        console.log(error);
+        return { status: 500, mensaje: error.toString() };
     }
 }
 

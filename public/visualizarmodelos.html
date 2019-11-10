@@ -118,7 +118,7 @@
           					<li>Habitación: {{modelo.types | verTipos}}</li>
         				</ul>
         				<p class="card-text mb-auto">{{modelo.description}}</p>
-        				<p><a class="btn btn-outline-danger mt-3" href="#" role="button" id="eliminarModelo">Eliminar</a></p>
+        				<p><a class="btn btn-outline-danger mt-3" href="#" role="button" id="eliminarModelo" @click.prevent="eliminarModelo(modelo.idModel)">Eliminar</a></p>
         		</div>
     		</div>
     	</div>
@@ -128,7 +128,7 @@
 	<hr class="mb-4">
           <div class="row">
               <div class="col-md-4 mb-3 mx-auto">
-                <a href="" class="btn btn-secondary btn-md btn-block" id="cerrarSesion">Salir</a>
+                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
               </div>
           </div>
             <hr class="mb-4">

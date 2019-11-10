@@ -225,4 +225,5 @@ async function obtenerInfo(idProvider) {
 module.exports = {
     actualizarInfoProveedor,
     corregirInfoProveedor,
+    obtenerInfo,
 };

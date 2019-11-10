@@ -28,7 +28,7 @@ document
 
         try {
             await axios.post("/proveedor", data);
-            window.location.replace("/proveedores.html");
+            window.location.replace("/misproveedores?nuevo=true");
         } catch (error) {
             alert(error.response);
         }
