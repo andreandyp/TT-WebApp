@@ -1,58 +1,62 @@
 .container {
-  max-width: 960px;
+    max-width: 960px;
 }
 
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
-.border-top-gray { border-top-color: #adb5bd; }
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+.border-top-gray {
+    border-top-color: #adb5bd;
+}
 
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
 
-.lh-condensed { line-height: 1.25; }
+.lh-condensed {
+    line-height: 1.25;
+}
 /*Hasta aqui es para el formulario*/
 
 .slider {
-
-	background: url("img/portada5.jpg");
-	height: 100vh;
-	background-size: cover;
-	background-position: center;
+    background: url("img/portada5.jpg");
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
 }
 
 .tamaño {
-
-	font-size: 2rem;
-	color: #F12B64;
+    font-size: 2rem;
+    color: #f12b64;
 }
 
 .tamaño-2 {
-
-	font-size: 20px;
+    font-size: 20px;
 }
 
 .barra {
-
-	background-color: rgba(74, 189, 172, .90);
+    background-color: rgba(74, 189, 172, 0.9);
 }
 
 .cuadro-r {
-
-	background-color: #FC0F88;
-	color: white;
+    background-color: #fc0f88;
+    color: white;
 }
 
 .color {
-
-	background-color: #f7cc81;
-
+    background-color: #f7cc81;
 }
 
 .fadeInLeft {
-
-	transition-delay: 4s;
+    transition-delay: 4s;
 }
 
 .bg-info {
-
-	background-color: rgba(74, 189, 172, .90);
+    background-color: rgba(74, 189, 172, 0.9);
+}
+.modelo3Drender {
+    width: 100%;
 }

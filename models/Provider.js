@@ -28,6 +28,9 @@ function init(sequelize, Sequelize) {
             rango: {
                 type: Sequelize.ENUM("BAJO", "MEDIO", "ALTO"),
             },
+            logo: {
+                type: Sequelize.STRING,
+            },
             Administrator_idAdministrator: {
                 type: Sequelize.INTEGER,
                 allowNull: false,

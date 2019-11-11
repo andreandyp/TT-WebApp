@@ -1,4 +1,4 @@
-var logo;
+var logoFile;
 $(document).ready(async () => {
     try {
         await axios.get("/auth/activo");
@@ -9,7 +9,7 @@ $(document).ready(async () => {
     const logoElem = document.querySelector("#logo");
 
     logoElem.onchange = function() {
-        logo = logoElem.files[0];
+        logoFile = logoElem.files[0];
     };
 
     document
@@ -18,21 +18,56 @@ $(document).ready(async () => {
             e.preventDefault();
 
             const razonSocial = document.querySelector("#razonsocial").value;
-            const RFC = document.querySelector("#RFC").value;
-            const tipo;
-            const persona;
-            const categoria
+            const rfc = document.querySelector("#RFC").value;
+            const persona = document.querySelector("#persona").value;
+            const rango = document.querySelector("#presupuesto").value;
 
-            const formData = new FormData();
-
-            formData.append("razonSocial", razonSocial);
-            formData.append("rfc", RFC);
-
-            const categorias = Array.from(
-                document.querySelectorAll(".categoria")
-            )
+            const category = Array.from(document.querySelectorAll(".categoria"))
                 .filter(cat => cat.checked)
                 .map(cat => cat.value.toUpperCase());
+
+            const socialNetworks = Array.from(
+                document.querySelectorAll(".social")
+            ).map(elem => elem.value);
+
+            const addresses = Array.from(document.querySelectorAll(".dir"));
+
+            const telefonos = Array.from(document.querySelectorAll(".tel"));
+
+            const emails = Array.from(document.querySelectorAll(".email"));
+
+            const stores = [];
+
+            for (let i = 0; i < addresses.length; i++) {
+                stores.push({
+                    address: addresses[i].value,
+                    phone: telefonos[i].value,
+                    email: emails[i].value,
+                });
+            }
+
+            const formData = new FormData();
+            formData.append("logo", logoFile);
+
+            try {
+                alert("Subiendo datos...");
+                await axios.put("/proveedor", {
+                    razonSocial,
+                    rfc,
+                    persona,
+                    category,
+                    socialNetworks,
+                    rango,
+                    stores,
+                });
+
+                alert("Subiendo logo...");
+                await axios.post("/uploads/logo", formData);
+
+                window.location.replace("/visualizarinfoproveedor");
+            } catch (error) {
+                alert(error.response.data);
+            }
         });
 
     document

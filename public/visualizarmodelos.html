@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/fonts.css">
 
+    <script defer src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
     <title>Mis modelos</title>
   </head>
 
@@ -92,7 +93,7 @@
     </section>
 
   <body class="bg-light">
-    <div class="container">
+    <div class="container" id="app">
       <div class="text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
@@ -101,14 +102,14 @@
 
      <!--Cards--> 
 
-  	<div class="card-deck mb-3 text-center" id="app">
+  	<div class="card-deck mb-3 text-center">
   		<div class="col-md-4" v-for="modelo in modelos">
     		<div class="card mb-4 shadow-sm">
       			<div class="card-header">
         			<h4 class="my-0 font-weight-normal">{{modelo.name}}</h4>
       			</div>
       			<div class="card-body">
-      				<img :src="modelo.file2D" class="card-img-top" alt="...">
+      				<img :src="modelo.file2D" class="card-img-top" alt="..." data-toggle="modal" :data-target="`#modal-${modelo.idModel}`">
         			<h4 class="card-title pricing-card-title">Precio: ${{modelo.price}} MXN</h4>
         				<ul class="list-unstyled mt-3 mb-4">
         					<li>Código: {{modelo.codigo || "N/A"}}</li>
@@ -120,9 +121,31 @@
         				<p class="card-text mb-auto">{{modelo.description}}</p>
         				<p><a class="btn btn-outline-danger mt-3" href="#" role="button" id="eliminarModelo" @click.prevent="eliminarModelo(modelo.idModel)">Eliminar</a></p>
         		</div>
-    		</div>
+            </div>
+            
+            <!-- Modal Modelo -->
+            <div class="modal fade" :id="`modal-${modelo.idModel}`" tabindex="-1" role="dialog" aria-labelledby="modalModelo" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modelo en 3D</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <model-viewer :src="modelo.fileAR" alt="A 3D model of an astronaut"
+                                camera-controls background-color="#455A64" class="modelo3Drender"></model-viewer>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     	</div>
-	</div>
+    </div>
 
 	<!--Botón de salir-->
 	<hr class="mb-4">
@@ -132,6 +155,7 @@
               </div>
           </div>
             <hr class="mb-4">
+    </div>
 
 
     <!-- Optional JavaScript -->
@@ -140,7 +164,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="js/scripts/visualizarmodelos.js"></script>
   </body>

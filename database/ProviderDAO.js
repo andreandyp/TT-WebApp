@@ -5,6 +5,7 @@ const {
     ProviderHasCategory,
     Category,
 } = require("../config/db");
+const firebase = require("../config/firebase");
 
 async function actualizarInfoProveedor(infoProveedor, idProvider) {
     try {
@@ -188,6 +189,7 @@ async function obtenerInfo(idProvider) {
                 "razonSocial",
                 "persona",
                 "rango",
+                "logo",
             ],
             where: {
                 idProvider,
@@ -210,6 +212,17 @@ async function obtenerInfo(idProvider) {
             ],
         });
 
+        const firebaseStorage = firebase.bucket();
+
+        if (proveedor.logo) {
+            proveedor.logo = await firebaseStorage
+                .file(proveedor.logo)
+                .getSignedUrl({
+                    action: "read",
+                    expires: Date.now() + 3600000 * 24 * 30, // 1 mes 😅
+                });
+        }
+
         return {
             status: 200,
             mensaje: proveedor,
@@ -222,8 +235,51 @@ async function obtenerInfo(idProvider) {
     }
 }
 
+async function subirLogo(logo, idProvider) {
+    const archivoFirebase = new Promise((resolve, reject) => {
+        const { mimetype } = logo;
+
+        const refModelo = `${idProvider}/logo.png`;
+        const refFB = firebase.bucket().file(refModelo);
+
+        const blobStream = refFB.createWriteStream({
+            metadata: {
+                contentType: mimetype,
+            },
+        });
+
+        blobStream.on("error", reject);
+
+        blobStream.on("finish", () => {
+            resolve(refModelo);
+        });
+
+        blobStream.end(logo.buffer);
+    });
+
+    await Promise.all([
+        archivoFirebase,
+        Provider.update(
+            {
+                logo: `${idProvider}/logo.png`,
+            },
+            {
+                where: {
+                    idProvider,
+                },
+            }
+        ),
+    ]);
+
+    return {
+        status: 200,
+        mensaje: "Logo subido",
+    };
+}
+
 module.exports = {
     actualizarInfoProveedor,
     corregirInfoProveedor,
     obtenerInfo,
+    subirLogo,
 };
