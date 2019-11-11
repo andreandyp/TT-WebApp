@@ -31,6 +31,9 @@ function init(sequelize, Sequelize) {
             logo: {
                 type: Sequelize.STRING,
             },
+            eliminable: {
+                type: Sequelize.BOOLEAN,
+            },
             Administrator_idAdministrator: {
                 type: Sequelize.INTEGER,
                 allowNull: false,

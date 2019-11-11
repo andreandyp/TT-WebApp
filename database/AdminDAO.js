@@ -5,7 +5,7 @@ const { Provider, Administrator } = require("../config/db");
 async function obtenerTodosProveedores() {
     try {
         const proveedores = await Provider.findAll({
-            attributes: ["idProvider", "username", "name"],
+            attributes: ["idProvider", "username", "name", "eliminable"],
             include: [
                 {
                     model: Administrator,
@@ -27,6 +27,7 @@ async function obtenerProveedores(idAdministrator) {
                 "idProvider",
                 "username",
                 "name",
+                "eliminable",
                 "Administrator_idAdministrator",
             ],
             where: {
@@ -59,6 +60,7 @@ async function añadirProveedor({ username, password, name, idAdministrator }) {
             username,
             password: crearHash(password),
             name,
+            eliminable: false,
             Administrator_idAdministrator: idAdministrator,
         });
 
@@ -78,6 +80,23 @@ async function añadirProveedor({ username, password, name, idAdministrator }) {
 
 async function eliminarProveedor(idProvider) {
     try {
+        const [proveedorEliminar] = await Provider.findAll({
+            where: {
+                idProvider,
+            },
+        });
+        if (!proveedorEliminar) {
+            return {
+                status: 400,
+                mensaje: "El proveedor no existe",
+            };
+        }
+        if (!proveedorEliminar.eliminable) {
+            return {
+                status: 400,
+                mensaje: "El proveedor no se puede eliminar",
+            };
+        }
         await Provider.destroy({
             where: {
                 idProvider,
