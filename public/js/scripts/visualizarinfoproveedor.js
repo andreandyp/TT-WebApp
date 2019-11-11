@@ -41,7 +41,7 @@ new Vue({
             const datos = await axios.get("/proveedor");
             this.$data.datosProveedor = datos.data;
         } catch (error) {
-            console.log(error);
+            alert(error.responde.data);
         }
     },
 });

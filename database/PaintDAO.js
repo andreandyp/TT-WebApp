@@ -78,7 +78,6 @@ async function añadirPintura({ datosPintura, idProvider }) {
             !presentacion ||
             (!rgbCode && !hexCode)
         ) {
-            console.log(idProvider);
             return {
                 status: 400,
                 mensaje: "Faltan datos de la pintura",

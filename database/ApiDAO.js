@@ -82,10 +82,9 @@ async function obtenerModelos() {
             mensaje: modelos,
         };
     } catch (error) {
-        console.log(error);
         return {
             status: 500,
-            mensaje: error,
+            mensaje: error.toString(),
         };
     }
 }
@@ -100,6 +99,7 @@ async function obtenerProveedores() {
                 "razonSocial",
                 "persona",
                 "rango",
+                "logo",
             ],
             where: {
                 razonSocial: {
@@ -126,12 +126,23 @@ async function obtenerProveedores() {
             ],
         });
 
+        const firebaseStorage = firebase.bucket();
+        for (const proveedor of proveedores) {
+            const [urlLogo] = await firebaseStorage
+                .file(proveedor.logo)
+                .getSignedUrl({
+                    action: "read",
+                    expires: Date.now() + 3600000 * 24 * 30, // 1 mes 😅
+                });
+
+            proveedor.logo = urlLogo;
+        }
+
         return {
             status: 200,
             mensaje: proveedores,
         };
     } catch (error) {
-        console.log(error);
         return {
             status: 500,
             mensaje: error.toString(),

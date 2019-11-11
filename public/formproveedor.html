@@ -123,21 +123,21 @@
             <div class="col-sm-5 mb-3">
               <div class="form-group">
               <label for="address">Dirección</label>
-              <input type="text" class="form-control dir1" id="address" name="address[]"placeholder="" required>
+              <input type="text" class="form-control dir" id="address" name="address[]"placeholder="" required>
             </div>
             </div>
 
             <div class="col-sm-3 mb-3">
               <div class="form-group">
               <label for="address">Número telefónico</label>
-              <input type="tel" class="form-control tel1" id="telefono" name="telefono[]" placeholder="" required>
+              <input type="tel" class="form-control tel" id="telefono" name="telefono[]" placeholder="" required>
             </div>
             </div>
             <div class="col-sm-4 mb-3">
               <div class="form-group">
                 <label for="address">Correo electrónico</label>
                 <div class="input-group">  
-              <input type="email" class="form-control email1" id="email" name="email[]" placeholder="usuario@escom.ipn" required>
+              <input type="email" class="form-control email" id="email" name="email[]" placeholder="usuario@escom.ipn" required>
               <div class="input-group-btn">
                   <button class="btn btn-success" type="button"  onclick="num_tiendas();"><span class="icon ion-md-add" aria-hidden="true"></span> 
                   </button>
@@ -157,7 +157,7 @@
     var divtest = document.createElement("div");
     divtest.setAttribute("class", "form-group removeclass"+rom);
     var rdiv = 'removeclass'+rom;
-    divtest.innerHTML = '<div class="row"><div class="col-sm-5 mb-3"><div class="form-group"><label for="address">Dirección</label><input type="text" class="form-control dir'+rom+'" id="address" name="address[]"placeholder="" required></div></div><div class="col-sm-3 mb-3"><div class="form-group"><label for="address">Número telefónico</label><input type="tel" class="form-control tel'+rom+'" id="telefono" name="telefono[]" placeholder="" required></div></div><div class="col-sm-4 mb-3"><div class="form-group"><label for="address">Correo electrónico</label><div class="input-group"><input type="email" class="form-control email'+rom+'" id="email" name="email[]" placeholder="usuario@escom.ipn" required><div class="input-group-btn"><button class="btn btn-danger " type="button"  onclick="remove_num_tiendas('+rom+');"><span class="icon ion-md-remove" aria-hidden="true"></span></button></div></div></div></div></div>';
+    divtest.innerHTML = '<div class="row"><div class="col-sm-5 mb-3"><div class="form-group"><label for="address">Dirección</label><input type="text" class="form-control dir" id="address" name="address[]"placeholder="" required></div></div><div class="col-sm-3 mb-3"><div class="form-group"><label for="address">Número telefónico</label><input type="tel" class="form-control tel" id="telefono" name="telefono[]" placeholder="" required></div></div><div class="col-sm-4 mb-3"><div class="form-group"><label for="address">Correo electrónico</label><div class="input-group"><input type="email" class="form-control email" id="email" name="email[]" placeholder="usuario@escom.ipn" required><div class="input-group-btn"><button class="btn btn-danger " type="button"  onclick="remove_num_tiendas('+rom+');"><span class="icon ion-md-remove" aria-hidden="true"></span></button></div></div></div></div></div>';
     
     objTo.appendChild(divtest)
 }
@@ -172,25 +172,37 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label for="proveedor">Tipo de proveedor</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Elige</option>
-                  <option value="ILUMINACION">Iluminación</option>
-                  <option value="PISO">Piso</option>
-                  <option value="MUEBLES">Muebles</option>
-                  <option value="PINTURA">Pintura</option>
-                  <option value="DECORACION">Decoración</option>
-                </select>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="iluminacion" value="iluminacion">
+                  <label class="custom-control-label" for="iluminacion">Iluminación</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="piso" value="pisos">
+                  <label class="custom-control-label" for="piso">Pisos</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="muebles" value="muebles">
+                  <label class="custom-control-label" for="muebles">Muebles</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="pintura" value="pintura">
+                  <label class="custom-control-label" for="pintura">Pintura</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="decoracion" value="decoracion">
+                  <label class="custom-control-label" for="decoracion">Decoración</label>
+                </div>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="persona">Persona</label>
-                <select class="custom-select d-block w-100" id="state" required>
+                <select class="custom-select d-block w-100" id="persona" required>
                   <option value="">Elige</option>
                   <option value="FISICA">Física</option>
                   <option value="MORAL">Moral</option>
                 </select>
               </div>
               <div class="col-md-4 mb-3">
-                <label for="presupuesto">Categoría de presupuesto</label>
+                <label for="presupuesto">Rango de presupuesto</label>
                 <select class="custom-select d-block w-100" id="presupuesto" required>
                   <option value="">Elige</option>
                   <option value="BAJO">Bajo</option>
@@ -210,7 +222,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <input type="text" class="form-control social1" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social">
+                  <input type="text" class="form-control social" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social">
                 </div>
               </div>    
                     <div class="input-group-btn">
@@ -237,7 +249,7 @@
                 <input name="submit" type="submit" class="btn btn-success btn-md btn-block" value="Enviar">
               </div>
               <div class="col-md-4 mb-3 mx-auto">
-                <a href="" class="btn btn-danger btn-md btn-block">Salir</a>
+                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
               </div>
           </div>
             <hr class="mb-4">
@@ -256,7 +268,7 @@
     var divtest = document.createElement("div");
     divtest.setAttribute("class", "form-group removeclass"+room);
     var rdiv = 'removeclass'+room;
-    divtest.innerHTML = '<div class="row"><div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control social'+room+'" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social"></div></div><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_redes_sociales('+ room +');"> <span class="icon ion-md-remove" aria-hidden="true"></span> </button></div></div></div></div></div>';
+    divtest.innerHTML = '<div class="row"><div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control social" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social"></div></div><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_redes_sociales('+ room +');"> <span class="icon ion-md-remove" aria-hidden="true"></span> </button></div></div></div></div></div>';
     
     objTo.appendChild(divtest)
 }
@@ -272,5 +284,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/scripts/formproveedor.js"></script>
   </body>
 </html>

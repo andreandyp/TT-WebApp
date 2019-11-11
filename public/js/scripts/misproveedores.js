@@ -62,7 +62,7 @@ new Vue({
             const datos = await axios.get("/proveedor");
             this.$data.proveedores = datos.data;
         } catch (error) {
-            console.log(error);
+            alert(error.response.data);
         }
     },
 });
