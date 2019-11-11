@@ -139,9 +139,9 @@ async function obtenerModelos(idProvider) {
 }
 
 async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
-    const { name, price, description, color, codigo, medidas } = datosModelo;
+    const { name, price, description = "", color, codigo = "", medidas } = datosModelo;
 
-    if (!name || !price || !color || !codigo || !medidas) {
+    if (!name || !price || !color || !medidas) {
         return { status: 400, mensaje: "Faltan datos del modelo" };
     }
 
