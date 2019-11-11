@@ -113,7 +113,7 @@
           Usuario: {{proveedor.username}}</strong>
           <hr class="mb-1">
             
-            <a href="" class="btn btn-outline-danger btn-md btn-block" @click.prevent="eliminarProveedor(proveedor.idProvider)">Eliminar</a>
+            <button type="button" class="btn btn-outline-danger btn-md btn-block" :disabled="{deshabilitado: proveedor.eliminable}" @click.prevent="eliminarProveedor(proveedor.idProvider)">Eliminar</a>
         </div>
       </div>
           
