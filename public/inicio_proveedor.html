@@ -121,6 +121,24 @@
     <script src="js/theme.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <script>
+        $(document).ready(async () => {
+            try {
+                const { data } = await axios.get("/auth/activo");
+                if (data.role === "admin") {
+                    return window.location.replace("/misproveedores");
+                }
+                if (data.role === "provider") {
+                    return window.location.replace(
+                        "/visualizarinfoproveedor"
+                    );
+                }
+            } catch (error) {
+                alert(error.toString());
+             }
+        });
+    </script>
+
     <script src="/js/scripts/inicio_proveedor.js"></script>
   </body>
 </html>
