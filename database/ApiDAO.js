@@ -183,6 +183,8 @@ async function obtenerPinturas() {
                 "vendorCode",
                 "rgbCode",
                 "hexCode",
+                "presentacion",
+                "price",
                 "Provider_idProvider",
             ],
         });
