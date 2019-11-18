@@ -64,6 +64,8 @@ async function obtenerModelos() {
                         action: "read",
                         expires: Date.now() + 3600000 * 24 * 30, // 1 mes 😅
                     });
+            } else {
+                urlAR = "";
             }
 
             const [url2D] = await firebaseStorage
