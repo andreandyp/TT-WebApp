@@ -151,33 +151,29 @@
               <div class="col-md-3 mb-3">
                 <h4 class="mb-3">Disponibilidad de tu modelo</h4>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" name="disponibilidad" id="disponible" value="opcion1"
-                    checked>
-                  <label class="custom-control-label" for="disponible">
-                    Disponible
-                  </label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" name="disponibilidad" id="unicapieza"
-                    value="opcion2">
-                  <label class="custom-control-label" for="unicapieza">
-                    Única pieza
-                  </label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" name="disponibilidad" id="edicionlimitada"
-                    value="opcion3">
-                  <label class="custom-control-label" for="edicionlimitada">
-                    Edición limitada
-                  </label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" name="disponibilidad" id="noexistente"
-                    value="opcion4">
-                  <label class="custom-control-label" for="noexistente">
-                    No existente
-                  </label>
-                </div>
+                <input class="custom-control-input dispo" type="radio" name="disponibilidad" id="DISPONIBLE" value="DISPONIBLE" :checked="modelo.disponibilidad === 'DISPONIBLE'">
+                <label class="custom-control-label" for="DISPONIBLE">
+                  Disponible
+                </label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input dispo" type="radio" name="disponibilidad" id="UNICA" value="UNICA" :checked="modelo.disponibilidad === 'UNICA'">
+                <label class="custom-control-label" for="UNICA">
+                  Única pieza
+                </label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input dispo" type="radio" name="disponibilidad" id="LIMITADA" value="LIMITADA" :checked="modelo.disponibilidad === 'LIMITADA'">
+                <label class="custom-control-label" for="LIMITADA">
+                  Edición limitada
+                </label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input class="custom-control-input dispo" type="radio" name="disponibilidad" id="CERO" value="CERO" :checked="modelo.disponibilidad === 'CERO'">
+                <label class="custom-control-label" for="CERO">
+                  No existente
+                </label>
+              </div>
               </div>
 
               <div class="col-md-3 mb-3">

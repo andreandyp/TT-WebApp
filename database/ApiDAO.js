@@ -25,6 +25,7 @@ async function obtenerModelos() {
                 "codigo",
                 "description",
                 "file2D",
+                "disponibilidad",
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",

@@ -228,7 +228,6 @@ async function eliminarEscena(idARScene, idProvider) {
             mensaje: "Escena eliminada",
         };
     } catch (error) {
-        console.log(error);
         return {
             status: 500,
             mensaje: error.toString(),

@@ -22,6 +22,7 @@ async function obtenerModelo(idModel, idProvider) {
                 "medidas",
                 "codigo",
                 "color",
+                "disponibilidad",
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
@@ -97,10 +98,12 @@ async function obtenerModelos(idProvider) {
                 "file2D",
                 "medidas",
                 "codigo",
+                "disponibilidad",
                 "createdAt",
                 "updatedAt",
                 "Provider_idProvider",
             ],
+            order: [["idModel", "ASC"]],
             where: {
                 Provider_idProvider: idProvider,
             },
@@ -166,6 +169,7 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
         color,
         codigo = "",
         medidas,
+        disponibilidad,
     } = datosModelo;
 
     if (!name || !price || !color || !medidas) {
@@ -233,6 +237,7 @@ async function añadirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
             Provider_idProvider: idProvider,
             codigo,
             medidas,
+            disponibilidad,
         });
 
         const { idModel } = nuevoModelo;
@@ -298,6 +303,7 @@ async function corregirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
         color,
         codigo = "",
         medidas,
+        disponibilidad,
     } = datosModelo;
 
     let { type, style, category } = datosModelo;
@@ -358,6 +364,7 @@ async function corregirModelo({ datosModelo, idProvider, modelo3d, modelo2d }) {
                 color,
                 Provider_idProvider: idProvider,
                 codigo,
+                disponibilidad,
                 medidas,
             },
             {

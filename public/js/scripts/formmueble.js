@@ -47,6 +47,9 @@ document
         const codigo = document.querySelector("#identificador").value;
         const medidas = document.querySelector("#medidas").value;
         const color = document.querySelector("#color").value;
+        const disponibilidad = Array.from(
+            document.querySelectorAll(".dispo")
+        ).filter(e => e.checked)[0].value;
 
         const formData = new FormData();
 
@@ -58,6 +61,7 @@ document
         formData.append("modelo3d", file3D);
         formData.append("modelo2d", file2D);
         formData.append("color", color);
+        formData.append("disponibilidad", disponibilidad);
 
         const categorias = Array.from(document.querySelectorAll(".categoria"))
             .filter(cat => cat.checked)

@@ -31,6 +31,9 @@ function init(sequelize, Sequelize) {
             medidas: {
                 type: Sequelize.STRING,
             },
+            disponibilidad: {
+                type: Sequelize.ENUM("DISPONIBLE", "UNICA", "LIMITADA", "CERO"),
+            },
             Provider_idProvider: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
