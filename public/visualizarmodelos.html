@@ -130,7 +130,7 @@
                         <p class="card-text mb-auto">{{modelo.description}}</p>
                         <hr class="mb-1">
                         <div class="d-flex justify-content-center">
-                            <a href="" class="btn btn-outline-primary btn-md mr-auto">
+                            <a :href="`/corregirmueble/${modelo.idModel}`" class="btn btn-outline-primary btn-md mr-auto">
                                 <i class="icon ion-md-create"></i>
                             </a>
                             <a href="" @click.prevent="eliminarModelo(modelo.idModel)" class="btn btn-outline-danger btn-md">

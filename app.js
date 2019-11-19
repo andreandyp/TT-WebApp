@@ -6,6 +6,7 @@ var logger = require("morgan");
 var passport = require("passport");
 var session = require("express-session");
 var html = require("ejs").renderFile;
+var MongoStore = require("connect-mongo")(session);
 
 require("dotenv").config();
 require("./config/passport-init")(passport);
@@ -32,10 +33,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
     session({
-        cookie: { maxAge: 1000 * 60 * 60 }, //1 día
-        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60,
+        },
+        secret: process.env.SECRET,
         resave: false,
-        secret: "secret",
+        saveUninitialized: false,
+        store: new MongoStore({
+            url: process.env.MONGO_DB,
+            ttl: 60 * 60 * 24 * 5,
+            stringify: false,
+        }),
     })
 );
 app.use(passport.initialize());

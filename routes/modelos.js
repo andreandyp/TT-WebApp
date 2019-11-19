@@ -9,6 +9,7 @@ const {
     obtenerModelos,
     añadirModelo,
     eliminarModelo,
+    corregirModelo,
 } = require("../database/ModelDAO");
 
 router.use((req, res, next) => {
@@ -57,6 +58,27 @@ router.post(
             idProvider: req.user.idProvider,
             modelo3d: modelo3d ? modelo3d[0] : "",
             modelo2d: modelo2d[0],
+        });
+
+        res.status(resultado.status).send(resultado.mensaje);
+    }
+);
+
+router.patch(
+    "/",
+    upload.fields([
+        { name: "modelo3d", maxCount: 1 },
+        { name: "modelo2d", maxCount: 1 },
+    ]),
+    async (req, res) => {
+        const { modelo3d, modelo2d } = req.files;
+        console.log(modelo2d);
+
+        const resultado = await corregirModelo({
+            datosModelo: req.body,
+            idProvider: req.user.idProvider,
+            modelo3d: modelo3d ? modelo3d[0] : "",
+            modelo2d: modelo2d ? modelo2d[0] : "",
         });
 
         res.status(resultado.status).send(resultado.mensaje);

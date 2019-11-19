@@ -101,6 +101,18 @@ router.get("/visualizarmodelos", (req, res) => {
     res.render("visualizarmodelos.html");
 });
 
+router.get("/corregirmueble/:id", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("corregirmueble.html");
+});
+
 router.get("/visualizarinfoproveedor", (req, res) => {
     if (!req.isAuthenticated()) {
         return res.redirect("/");
