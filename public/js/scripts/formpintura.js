@@ -41,7 +41,7 @@ document
                 hexCode,
                 rgbCode,
             });
-            window.location.replace("/visualizarmodelos");
+            window.location.replace("/visualizarpinturas");
         } catch (error) {
             alert(error.response.data);
         }

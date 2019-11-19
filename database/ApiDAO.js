@@ -7,6 +7,7 @@ const {
     SocialNetwork,
     Store,
     Paint,
+    ARScene,
 } = require("../config/db");
 const { Op } = require("sequelize");
 const firebase = require("../config/firebase");
@@ -203,7 +204,55 @@ async function obtenerPinturas() {
     }
 }
 
-async function obtenerEscenas() {}
+async function obtenerEscenas() {
+    try {
+        const escenas = await ARScene.findAll({
+            attributes: ["idARScene", "name", "imagen", "Provider_idProvider"],
+            include: [
+                {
+                    model: Type,
+                    attributes: ["idType"],
+                },
+                {
+                    model: PredefinedStyle,
+                    attributes: ["idPredefinedStyle"],
+                },
+                {
+                    model: Model,
+                    through: {
+                        attributes: [],
+                    },
+                    attributes: ["idModel"],
+                },
+            ],
+        });
+
+        const firebaseStorage = firebase.bucket();
+
+        for (const escena of escenas) {
+            if (escena.imagen) {
+                const [url] = await firebaseStorage
+                    .file(escena.imagen)
+                    .getSignedUrl({
+                        action: "read",
+                        expires: Date.now() + 3600000, // 1 hora 😅
+                    });
+
+                escena.imagen = url;
+            }
+        }
+
+        return {
+            status: 200,
+            mensaje: escenas,
+        };
+    } catch (error) {
+        return {
+            status: 500,
+            mensaje: error.toString(),
+        };
+    }
+}
 
 module.exports = {
     obtenerModelos,

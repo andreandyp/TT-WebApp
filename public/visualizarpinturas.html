@@ -100,6 +100,15 @@
       </div>
 
      <!--Cards--> 
+     <div class="col-md-6 mx-auto" v-if="pinturas.length === 0">
+         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+             <div class="col p-4 d-flex flex-column position-static text-center">
+                 <h2>¡Lo siento! No tienes pinturas aún.</h2>
+                 <a href="/formpintura">¿Quieres añadir una nueva?</a>
+                 <img class="d-block mx-auto mb-4" src="img/no.png" width="150">
+             </div>
+         </div>
+     </div>
 
   	<div class="card-deck mb-3 text-center">
   		<div class="col-md-4" v-for="pintura in pinturas">

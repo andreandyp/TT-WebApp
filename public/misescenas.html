@@ -103,11 +103,11 @@
      <!--Cards--> 
      <hr class="mb-4">
      <div class="row">
-               <div class="col-md-4 mb-3 mx-auto">
+               <div class="col-md-3 mb-3 mx-auto">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" placeholder="" required v-model="nombre">
+                <input type="text" class="form-control" id="nombre" placeholder="" required v-model="name">
               </div>
-              <div class="col-md-4 mb-3 mx-auto">
+              <div class="col-md-3 mb-3 mx-auto">
                 <label for="proveedor">¿A qué estilo pertenece?</label>
                 <select class="custom-select d-block w-100" id="country" required v-model="estilo">
                   <option value="">Elige</option>
@@ -121,7 +121,7 @@
                   <option value="OTRO">Otro</option>
                 </select>
               </div>
-              <div class="col-md-4 mb-3 mx-auto">
+              <div class="col-md-3 mb-3 mx-auto">
                 <label for="proveedor">¿Qué habitación es?</label>
                 <select class="custom-select d-block w-100" id="country" required v-model="habitacion">
                   <option value="">Elige</option>
@@ -131,6 +131,10 @@
                   <option value="COCINA">Cocina</option>
                   <option value="RECAMARA">Recámara</option>
                 </select>
+              </div>
+              <div class="col-md-3 mb-3 mx-auto">
+                <label for="modelo3d">Sube una imagen de la escena (Formato .jpg, .png)</label>
+                <input type="file" class="form-control-file" id="modelo3d" accept=".jpg, .png" @change="subirImagen()" ref="imagenf">
               </div>
       </div>
 

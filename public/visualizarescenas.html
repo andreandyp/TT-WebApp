@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="style_Axdecor.css">
-	<link rel="stylesheet" href="css/animate.css">
-	<link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style_Axdecor.css">
+	<link rel="stylesheet" href="/css/animate.css">
+	<link rel="stylesheet" href="/css/fonts.css">
 
     <title>Mis escenas</title>
   </head>
@@ -92,7 +92,7 @@
     </section>
 
   <body class="bg-light">
-    <div class="container">
+    <div class="container" id="app">
       <div class="text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
@@ -100,22 +100,31 @@
       </div>
 
      <!--Cards--> 
+     <div class="col-md-6 mx-auto" v-if="escenas.length === 0">
+         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+             <div class="col p-4 d-flex flex-column position-static text-center">
+                 <h2>¡Lo siento! No tienes escenas aún.</h2>
+                 <a href="/misescenas">¿Quieres añadir una nueva?</a>
+                 <img class="d-block mx-auto mb-4" src="img/no.png" width="150">
+             </div>
+         </div>
+     </div>
 
   	<div class="card-deck mb-3 text-center">
-  		<div class="col-md-4">
+  		<div class="col-md-4" v-for="escena in escenas">
     		<div class="card mb-4 shadow-sm">
       			<div class="card-header">
-        			<h4 class="my-0 font-weight-normal">Comedor M</h4>
+        			<h4 class="my-0 font-weight-normal">{{escena.name}}</h4>
       			</div>
       			<div class="card-body">
-      				<img src="img/comedormini.png" class="card-img-top" alt="">
+      				<img :src="escena.imagen" class="card-img-top" alt="">
               <hr>
         				<ul class="list-unstyled mt-3 mb-4 text-left">
-        					<li>Estilo: Minimalista</li>
-                  <li>Habitación: Comedor</li>
+        					<li>Estilo: {{escena.predefinedstyle.style}}</li>
+                  <li>Habitación: {{escena.type.nameType}}</li>
         				</ul>
         			<div class="d-flex justify-content-center">
-                      <a href="" class="btn btn-outline-danger btn-md">Eliminar</a>
+                      <a href="" @click.prevent="eliminarEscena(escena.idARScene)" class="btn btn-outline-danger btn-md">Eliminar</a>
                     </div>
         		</div>
     		</div>
@@ -130,13 +139,17 @@
               </div>
           </div>
             <hr class="mb-4">
+            </div>
 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/theme.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="js/scripts/visualizarescenas.js"></script>
   </body>
 </html>

@@ -37,7 +37,7 @@ router.get("/:idARScene", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const resultado = await añadirEscena({
-        datosPintura: req.body,
+        datosEscena: req.body,
         idProvider: req.user.idProvider,
     });
 
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
     const resultado = await modificarEscena({
-        datosPintura: req.body,
+        datosEscena: req.body,
         idProvider: req.user.idProvider,
     });
 

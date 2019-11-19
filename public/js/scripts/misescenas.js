@@ -28,7 +28,7 @@ new Vue({
             modelos: [],
             estilo: "",
             habitacion: "",
-            nombre: "",
+            name: "",
         };
     },
     methods: {
@@ -41,15 +41,33 @@ new Vue({
                     return e.id.replace("elem-", "");
                 });
 
-            return alert("En construcción :P");
+            try {
+                const formData = new FormData();
+                if (!this.$data.imagen) {
+                    return alert("Falta la imagen");
+                }
 
-            await axios.post("/escenas", {
-                name: this.$data.name,
-                imagen: null,
-                tipo: this.$data.habitacion,
-                estilo: this.$data.estilo,
-                modelos,
-            });
+                alert("Subiendo datos...");
+                const nuevaEscena = await axios.post("/escenas", {
+                    name: this.$data.name,
+                    tipo: this.$data.habitacion,
+                    estilo: this.$data.estilo,
+                    modelos,
+                });
+
+                formData.append("imagen", this.$data.imagen);
+                formData.append("idARScene", nuevaEscena.data.idARScene);
+
+                alert("Subiendo logo...");
+                await axios.post("/uploads/imagen-escena", formData);
+
+                window.location.replace("/visualizarescenas");
+            } catch (error) {
+                alert(error.response.data);
+            }
+        },
+        subirImagen() {
+            this.$data.imagen = this.$refs.imagenf.files[0];
         },
     },
     filters: {},
