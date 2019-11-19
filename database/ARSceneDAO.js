@@ -202,12 +202,26 @@ async function modificarEscena({ datosEscena, idProvider }) {
 
 async function eliminarEscena(idARScene, idProvider) {
     try {
-        await ARScene.destroy({
+        const [escenaAEliminar] = await ARScene.findAll({
+            attributes: ["imagen", "Provider_idProvider"],
             where: {
-                Provider_idProvider: idProvider,
                 idARScene,
+                Provider_idProvide: idProvider,
             },
+            raw: true,
         });
+        await Promise.all([
+            firebase
+                .bucket()
+                .file(escenaAEliminar.imagen)
+                .delete(),
+            ARScene.destroy({
+                where: {
+                    Provider_idProvider: idProvider,
+                    idARScene,
+                },
+            }),
+        ]);
 
         return {
             status: 200,
