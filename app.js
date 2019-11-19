@@ -18,6 +18,7 @@ var modelRouter = require("./routes/modelos");
 var viewsRouter = require("./routes/index");
 var apiRouter = require("./routes/api");
 var paintRouter = require("./routes/pinturas");
+var escenasRouter = require("./routes/escenas");
 var uploadsRouter = require("./routes/uploads");
 
 var app = express();
@@ -56,6 +57,7 @@ app.use("/proveedor", providerRouter);
 app.use("/modelos", modelRouter);
 app.use("/api", apiRouter);
 app.use("/pinturas", paintRouter);
+app.use("/escenas", escenasRouter);
 app.use("/uploads", uploadsRouter);
 
 // catch 404 and forward to error handler

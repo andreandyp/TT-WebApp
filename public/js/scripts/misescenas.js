@@ -24,6 +24,7 @@ new Vue({
     el: "#app",
     data() {
         return {
+            elems: [],
             modelos: [],
             estilo: "",
             habitacion: "",
@@ -31,15 +32,27 @@ new Vue({
         };
     },
     methods: {
-        subirEstilo() {
-            console.log(this.$data);
+        async subirEstilo() {
+            const elems = Array.from(document.querySelectorAll(".añadido"));
+
+            const modelos = elems
+                .filter(e => e.checked)
+                .map(e => {
+                    return e.id.replace("elem-", "");
+                });
+
+            return alert("En construcción :P");
+
+            await axios.post("/escenas", {
+                name: this.$data.name,
+                imagen: null,
+                tipo: this.$data.habitacion,
+                estilo: this.$data.estilo,
+                modelos,
+            });
         },
     },
-    filters: {
-        verEstilos(estilos) {
-            return estilos.map(e => e.style).join(", ");
-        },
-    },
+    filters: {},
     async mounted() {
         const modelos = await axios.get("/modelos");
         this.$data.modelos = modelos.data;

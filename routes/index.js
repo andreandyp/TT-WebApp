@@ -149,6 +149,30 @@ router.get("/corregirpintura/:id", (req, res) => {
     res.render("corregirpintura.html");
 });
 
+router.get("/visualizarescenas", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("visualizarescenas.html");
+});
+
+router.get("/misescenas", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("misescenas.html");
+});
+
 router.get("/", (req, res) => {
     res.render("index.html");
 });

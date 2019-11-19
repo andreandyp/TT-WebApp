@@ -1,6 +1,8 @@
 const Sequelize = require("sequelize");
 
 const AdministratorModel = require("../models/Administrator");
+const ARSceneModel = require("../models/ARScene");
+const ARSceneHasModelModel = require("../models/ARSceneHasModel");
 const CategoryModel = require("../models/Category");
 const ModelModel = require("../models/Model");
 const ModelHasCategoryModel = require("../models/ModelHasCategory");
@@ -19,6 +21,8 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 });
 
 const Administrator = AdministratorModel(sequelize, Sequelize);
+const ARScene = ARSceneModel(sequelize, Sequelize);
+const ARSceneHasModel = ARSceneHasModelModel(sequelize, Sequelize);
 const Category = CategoryModel(sequelize, Sequelize);
 const Model = ModelModel(sequelize, Sequelize);
 const ModelHasCategory = ModelHasCategoryModel(sequelize, Sequelize);
@@ -153,11 +157,59 @@ Store.belongsTo(Provider, {
     targetKey: "idProvider",
 });
 
+// Asociar un proveedor a muchas escenas
+Provider.hasMany(ARScene, {
+    foreignKey: "Provider_idProvider",
+    sourceKey: "idProvider",
+});
+
+ARScene.belongsTo(Provider, {
+    foreignKey: "Provider_idProvider",
+    targetKey: "idProvider",
+});
+
+// Asociar un estilo a muchas escenas
+PredefinedStyle.hasMany(ARScene, {
+    foreignKey: "PredefinedStyle_idPredefinedStyle",
+    sourceKey: "idPredefinedStyle",
+});
+
+ARScene.belongsTo(PredefinedStyle, {
+    foreignKey: "PredefinedStyle_idPredefinedStyle",
+    targetKey: "idPredefinedStyle",
+});
+
+// Asociar un tipo a muchas escenas
+Type.hasMany(ARScene, {
+    foreignKey: "Type_idType",
+    sourceKey: "idType",
+});
+
+ARScene.belongsTo(Type, {
+    foreignKey: "Type_idType",
+    targetKey: "idType",
+});
+
+// Asociar muchos modelos a muchas escenas
+ARScene.belongsToMany(Model, {
+    through: ARSceneHasModel,
+    foreignKey: "ARScene_idARScene",
+    otherKey: "Model_idModel",
+});
+
+Model.belongsToMany(ARScene, {
+    through: ARSceneHasModel,
+    foreignKey: "Model_idModel",
+    otherKey: "ARScene_idARScene",
+});
+
 const force = false;
 sequelize.sync({ force }).then(() => console.log("Modelos sincronizados"));
 
 module.exports = {
     Administrator,
+    ARScene,
+    ARSceneHasModel,
     Category,
     Model,
     ModelHasCategory,
