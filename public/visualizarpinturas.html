@@ -11,8 +11,7 @@
 	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/fonts.css">
 
-    <script defer src="/js/model-viewer-legacy.js"></script>
-    <title>Mis modelos</title>
+    <title>Mis pinturas</title>
   </head>
 
 <body id="page-top">
@@ -38,22 +37,22 @@
                 <!-- Links -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/">
+                        <a class="nav-link js-scroll-trigger" href="AXdecor.html">
                          Inicio
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/#about">
+                        <a class="nav-link js-scroll-trigger" href="#about">
                          Conócenos  
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/#feature">
+                        <a class="nav-link js-scroll-trigger" href="#feature">
                            Ingresar
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="/#contact">
+                        <a class="nav-link js-scroll-trigger" href="#contact">
                             Contacto
                         </a>
                     </li>
@@ -82,7 +81,7 @@
                         
                         <!-- Heading -->
                         <h1 class="text-white text-center mb-4 display-4 font-weight-bold">
-                            AxDecor<br>¡Hola Proveedor!, aquí están tus modelos
+                            AxDecor<br>¡Hola Proveedor!, aquí están tus muestras de pintura
                         </h1>
                     </div>
                 </div>
@@ -97,93 +96,46 @@
       <div class="text-center">
         <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
         <h2>Proveedor</h2>
-        <p class="lead">Tus modelos son...</p>
+        <p class="lead">Tus muestras de pintura son...</p>
       </div>
-
-      <hr class="mb-3">
-          <div class="row">
-              <div class="col-md-4 mb-3 mx-auto">
-                <a href="/visualizarpinturas" class="btn btn-outline-info btn-md btn-block" id="subirpintura">Ver pinturas</a>
-              </div>
-              <div class="col-md-4 mb-3 mx-auto">
-                <a href="/misescenas" class="btn btn-outline-warning btn-md btn-block" id="subirescena">Subir escena</a>
-              </div>
-          </div>
-    <hr class="mb-3">
 
      <!--Cards--> 
 
-     <div class="col-md-6 mx-auto" v-if="modelos.length === 0">
-         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-             <div class="col p-4 d-flex flex-column position-static text-center">
-                 <h2>¡Lo siento! No tienes modelos aún.</h2>
-                 <img class="d-block mx-auto mb-4" src="img/no.png" width="150">
-             </div>
-         </div>
-     </div>
-
   	<div class="card-deck mb-3 text-center">
-  		<div class="col-md-4" v-for="modelo in modelos">
+  		<div class="col-md-4" v-for="pintura in pinturas">
     		<div class="card mb-4 shadow-sm">
       			<div class="card-header">
-        			<h4 class="my-0 font-weight-normal">{{modelo.name}}</h4>
+        			<h4 class="my-0 font-weight-normal">{{pintura.name}}</h4>
       			</div>
       			<div class="card-body">
-      				<img :src="modelo.file2D" class="card-img-top" alt="..." data-toggle="modal" :data-target="`#modal-${modelo.idModel}`">
-        			<h4 class="card-title pricing-card-title">Precio: ${{modelo.price}} MXN</h4>
+      				<div class="color" :style="`background-color: ${pintura.hexCode}; height: 200px;`"></div>
+              <hr>
+        			<h4 class="card-title pricing-card-title">Precio/lt: {{pintura.price}}</h4>
         				<ul class="list-unstyled mt-3 mb-4">
-        					<li>Código: {{modelo.codigo || "N/A"}}</li>
-          					<li>Medidas: {{modelo.medidas || "N/A"}}</li>
-          					<li>Color: {{modelo.color}}</li>
-          					<li>Estilo: {{modelo.predefinedstyles | verEstilos}}</li>
-          					<li>Habitación: {{modelo.types | verTipos}}</li>
+        					<li>Código: {{pintura.vendorCode}}</li>
+                  <li>HEX: {{pintura.hexCode}}</li>
+                  <li>RGBA: {{pintura.rgbCode}}</li>
+          				<li>Presentación: {{pintura.presentacion}}</li>
         				</ul>
-                        <p class="card-text mb-auto">{{modelo.description}}</p>
-                        <hr class="mb-1">
-                        <div class="d-flex justify-content-center">
-                            <a :href="`/corregirmueble/${modelo.idModel}`" class="btn btn-outline-primary btn-md mr-auto">
-                                <i class="icon ion-md-create"></i>
-                            </a>
-                            <a href="" @click.prevent="eliminarModelo(modelo.idModel)" class="btn btn-outline-danger btn-md">
-                                <i class="icon ion-md-close"></i>
-                            </a>
-                        </div>
-        		</div>
-            </div>
-            
-            <!-- Modal Modelo -->
-            <div class="modal fade" :id="`modal-${modelo.idModel}`" tabindex="-1" role="dialog" aria-labelledby="modalModelo" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modelo en 3D</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <model-viewer :src="modelo.fileAR" alt="A 3D model of an astronaut"
-                                camera-controls background-color="#455A64" class="modelo3Drender"></model-viewer>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                        </div>
+        			<hr class="mb-1">
+        			<div class="d-flex justify-content-center">
+                      <a href="" class="btn btn-outline-primary btn-md  mr-auto"><i class="icon ion-md-create"></i></a>
+                      <a href="" class="btn btn-outline-danger btn-md" @click.prevent="eliminarPintura(pintura.idPaint)"><i class="icon ion-md-close"></i></a>
                     </div>
-                </div>
-            </div>
-
+        		</div>
+    		</div>
     	</div>
-    </div>
-
-	<!--Botón de salir-->
+  </div>
+<!--Botón de salir-->
 	<hr class="mb-4">
           <div class="row">
               <div class="col-md-4 mb-3 mx-auto">
-                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
+                <a href="" class="btn btn-danger btn-md btn-block"  @click.prevent="salir()">Salir</a>
               </div>
           </div>
             <hr class="mb-4">
-    </div>
+  </div>
+    
 
 
     <!-- Optional JavaScript -->
@@ -192,8 +144,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/theme.js"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>    
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script src="js/scripts/visualizarmodelos.js"></script>
+    <script src="js/scripts/visualizarpinturas.js"></script>
   </body>
 </html>

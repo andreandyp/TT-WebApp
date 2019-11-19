@@ -125,6 +125,18 @@ router.get("/visualizarinfoproveedor", (req, res) => {
     res.render("visualizarinfoproveedor.html");
 });
 
+router.get("/visualizarpinturas", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("visualizarpinturas.html");
+});
+
 router.get("/", (req, res) => {
     res.render("index.html");
 });
