@@ -206,7 +206,7 @@ async function eliminarEscena(idARScene, idProvider) {
             attributes: ["imagen", "Provider_idProvider"],
             where: {
                 idARScene,
-                Provider_idProvide: idProvider,
+                Provider_idProvider: idProvider,
             },
             raw: true,
         });
@@ -228,6 +228,7 @@ async function eliminarEscena(idARScene, idProvider) {
             mensaje: "Escena eliminada",
         };
     } catch (error) {
+        console.log(error);
         return {
             status: 500,
             mensaje: error.toString(),
