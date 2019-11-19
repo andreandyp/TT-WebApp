@@ -137,6 +137,18 @@ router.get("/visualizarpinturas", (req, res) => {
     res.render("visualizarpinturas.html");
 });
 
+router.get("/corregirpintura/:id", (req, res) => {
+    if (!req.isAuthenticated()) {
+        return res.redirect("/");
+    }
+
+    if (req.user.role !== "provider") {
+        return res.status(401).send("No puedes entrar aquí");
+    }
+
+    res.render("corregirpintura.html");
+});
+
 router.get("/", (req, res) => {
     res.render("index.html");
 });

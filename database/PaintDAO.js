@@ -32,7 +32,7 @@ async function obtenerPinturas(idProvider) {
 
 async function obtenerPintura(idPaint, idProvider) {
     try {
-        const pinturas = await Paint.findAll({
+        const [pintura] = await Paint.findAll({
             attributes: [
                 "idPaint",
                 "name",
@@ -51,7 +51,7 @@ async function obtenerPintura(idPaint, idProvider) {
 
         return {
             status: 200,
-            mensaje: pinturas,
+            mensaje: pintura,
         };
     } catch (error) {
         return {
@@ -105,6 +105,7 @@ async function añadirPintura({ datosPintura, idProvider }) {
 
 async function modificarPintura({ datosPintura, idProvider }) {
     try {
+        console.log(datosPintura);
         const {
             idPaint,
             name,
@@ -114,6 +115,7 @@ async function modificarPintura({ datosPintura, idProvider }) {
             price,
             presentacion,
         } = datosPintura;
+        console.log("aqui");
 
         await Paint.update(
             {
