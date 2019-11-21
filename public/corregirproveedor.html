@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="style_Axdecor.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/fonts.css">
+
+    <title>Proveedor-Axdecor</title>
+  </head>
+
+<body id="page-top">
+  
+   <!-- NAVBAR-->
+      <nav class="navbar navbar-expand-lg navbar-dark navbar-togglable  fixed-top " id="mainNav">
+        <div class="container">
+
+            <!-- Brand -->
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">
+                <h2><img src="img/Logo-AXdecor_transparente.svg" class="d-inline-block"style="height: 40px; width: 40px;">AxDecor</h2>
+            </a>
+
+            <!-- Toggler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon-bar">
+                    <i class="fa fa-bars"></i>
+                </span>
+            </button>
+
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <!-- Links -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/">
+                         Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/#about">
+                         Conócenos  
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/#feature">
+                           Ingresar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/#contact">
+                            Contacto
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- / .navbar-collapse -->
+        </div>
+        <!-- / .container -->
+    </nav>
+
+<!------------------------------------------->
+
+ <section class="section section-top section-full">
+
+        <!-- Fondo principal -->
+        <div class="bg-cover" style="background-image: url(img/portada5.jpg);"></div>
+
+        <!-- Opacidad del fondo -->
+        <div class="bg-overlay"></div>
+        <!-- Content -->
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-10 col-lg-7 ">
+                    <div class="banner-content">
+                        
+                        <!-- Heading -->
+                        <h1 class="text-white text-center mb-4 display-4 font-weight-bold">
+                            AxDecor<br>¡Hola Proveedor!
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <!-- / .row -->
+        </div>
+        <!-- / .container -->
+    </section>
+
+   <!--Formulario-->
+
+  <body class="bg-light">
+    <div class="container" id="app">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="img/proveedor.svg" alt="" width="130" height="130">
+        <h2>Proveedor</h2>
+        <p class="lead">Ingresa tus datos y sube tus modelos</p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Razón social</h4>
+          <form class="form-proveedor">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">¿Cuál es la razón social del proveedor?</label>
+                <input type="text" class="form-control" id="razonsocial" placeholder="" value="" required>
+              </div>
+            <div class="col-md-6 mb-3">
+              <label for="RFC">RFC <span class="text-muted"></span></label>
+              <input type="" class="form-control" id="RFC" placeholder="" value="" required="">
+            </div>
+            </div>
+      <hr class="mb-4">
+<div class="panel panel-default">
+  <h4 class="mb-1">Tiendas</h4>
+      <div id="num_tiendas"></div>
+          <div class="row">
+            <div class="col-sm-5 mb-3">
+              <div class="form-group">
+              <label for="address">Dirección</label>
+              <input type="text" class="form-control dir" id="address" name="address[]"placeholder="" required>
+            </div>
+            </div>
+
+            <div class="col-sm-3 mb-3">
+              <div class="form-group">
+              <label for="address">Número telefónico</label>
+              <input type="tel" class="form-control tel" id="telefono" name="telefono[]" placeholder="" required>
+            </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+              <div class="form-group">
+                <label for="address">Correo electrónico</label>
+                <div class="input-group">  
+              <input type="email" class="form-control email" id="email" name="email[]" placeholder="usuario@escom.ipn" required>
+              <div class="input-group-btn">
+                  <button class="btn btn-success" type="button"  onclick="num_tiendas();"><span class="icon ion-md-add" aria-hidden="true"></span> 
+                  </button>
+            </div>
+        </div>
+            </div>
+            </div>
+         </div>
+  </div>
+          
+
+            <hr class="mb-4">
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="proveedor">Tipo de proveedor</label>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="iluminacion" value="iluminacion">
+                  <label class="custom-control-label" for="iluminacion">Iluminación</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="piso" value="pisos">
+                  <label class="custom-control-label" for="piso">Pisos</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="muebles" value="muebles">
+                  <label class="custom-control-label" for="muebles">Muebles</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="pintura" value="pintura">
+                  <label class="custom-control-label" for="pintura">Pintura</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input categoria" id="decoracion" value="decoracion">
+                  <label class="custom-control-label" for="decoracion">Decoración</label>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="persona">Persona</label>
+                <select class="custom-select d-block w-100" id="persona" required>
+                  <option value="">Elige</option>
+                  <option value="FISICA">Física</option>
+                  <option value="MORAL">Moral</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="presupuesto">Rango de presupuesto</label>
+                <select class="custom-select d-block w-100" id="presupuesto" required>
+                  <option value="">Elige</option>
+                  <option value="BAJO">Bajo</option>
+                  <option value="MEDIO">Medio</option>
+                  <option value="ALTO">Alto</option>
+                </select>
+                <div class="invalid-feedback">
+                    Elige una de las opciones
+                </div>
+              </div>
+            </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Redes sociales</div>
+        <div class="panel-body">
+          <div id="redes_sociales"></div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input type="text" class="form-control social" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social">
+                </div>
+              </div>    
+                    <div class="input-group-btn">
+                        <button class="btn btn-success " type="button"  onclick="redes_sociales();">     <span class="icon ion-md-add" aria-hidden="true"></span> 
+                        </button>
+                    </div>
+            </div>
+        </div>
+      </div>
+      
+      <hr class="mb-4">
+      <h4 class="mb-3">Sube una imagen de tu logotipo  </h4>
+
+  <div class="row">
+      <div class="form-group mx-auto">
+      <label for="logo">En formato .jpg, .png, .svg</label>
+      <input type="file" class="form-control-file" id="logo">
+      </div>
+    </div>
+            
+        <hr class="mb-4">
+          <div class="row">
+              <div class="col-md-4 mb-3 mx-auto">
+                <input name="submit" type="submit" class="btn btn-success btn-md btn-block" value="Enviar">
+              </div>
+              <div class="col-md-4 mb-3 mx-auto">
+                <a href="" class="btn btn-danger btn-md btn-block" id="cerrarSesion">Salir</a>
+              </div>
+          </div>
+            <hr class="mb-4">
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+<script type="text/javascript">
+   var room = 1;
+    function redes_sociales() {
+ 
+    room++;
+    var objTo = document.getElementById('redes_sociales')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "form-group removeclass"+room);
+    var rdiv = 'removeclass'+room;
+    divtest.innerHTML = '<div class="row"><div class="col-sm-6 nopadding"><div class="form-group"> <input type="text" class="form-control social" id="Socialn" name="Socialn[]" value="" placeholder="URL de tu red social"></div></div><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_redes_sociales('+ room +');"> <span class="icon ion-md-remove" aria-hidden="true"></span> </button></div></div></div></div></div>';
+    
+    objTo.appendChild(divtest)
+}
+   function remove_redes_sociales(rid) {
+     $('.removeclass'+rid).remove();
+   }
+
+</script>
+
+<script type="text/javascript">
+   var rom = 1;
+    function num_tiendas() {
+ 
+    rom++;
+    var objTo = document.getElementById('num_tiendas')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "form-group removeclass"+rom);
+    var rdiv = 'removeclass'+rom;
+    divtest.appendChild(crearDireccion(rom))
+    //divtest.innerHTML = '';
+    
+    objTo.appendChild(divtest)
+}
+function crearDireccion(rom) {
+  // Dirección
+  var labelAddress = document.createElement("label")
+  labelAddress.setAttribute("for", "address")
+  labelAddress.textContent = "Dirección"
+  var address = document.createElement("input");
+  address.setAttribute("type", "text")
+  address.setAttribute("required", "true")
+  address.classList.add("form-control", "dir")
+  address.id = "address"
+
+  var formGroup1 = document.createElement("div")
+  formGroup1.classList.add("form-group")
+  formGroup1.append(labelAddress, address)
+
+  var columna1 = document.createElement("div")
+  columna1.classList.add("col-sm-5", "mb-3")
+  columna1.append(formGroup1)
+
+  // Teléfono
+  var labelTelefono = document.createElement("label")
+  labelTelefono.setAttribute("for", "address")
+  labelTelefono.textContent = "Número telefónico"
+  var telefono = document.createElement("input");
+  telefono.setAttribute("type", "tel")
+  telefono.setAttribute("required", "true")
+  telefono.classList.add("form-control", "tel")
+  telefono.id = "telefono"
+
+  var formGroup2 = document.createElement("div")
+  formGroup2.classList.add("form-group")
+  formGroup2.append(labelTelefono, telefono)
+
+  var columna2 = document.createElement("div")
+  columna2.classList.add("col-sm-3", "mb-3")
+  columna2.append(formGroup2)
+
+  // E-mail
+    var labelCorreo = document.createElement("label")
+  labelCorreo.setAttribute("for", "address")
+  labelCorreo.textContent = "Correo electrónico"
+  var correo = document.createElement("input");
+  correo.setAttribute("type", "email")
+  correo.setAttribute("required", "true")
+  correo.setAttribute("placeholder", "usuario@escom.ipn")
+  correo.classList.add("form-control", "email")
+  correo.id = "email"
+
+  var button = document.createElement("button")
+  button.setAttribute("type", "button")
+  button.addEventListener("click", function () {
+    remove_num_tiendas(rom);
+  })
+  button.classList.add("btn", "btn-danger")
+
+  var span = document.createElement("span")
+  span.classList.add("icon", "ion-md-remove")
+  span.setAttribute("aria-hidden", "true")
+
+  var inputGroupBtn = document.createElement("div")
+  inputGroupBtn.classList.add("input-group-btn")
+  inputGroupBtn.append(button, span)
+
+  var inputGroup = document.createElement("div")
+  inputGroup.classList.add("input-group")
+  inputGroup.append(correo, inputGroupBtn)
+
+  var formGroup3 = document.createElement("div")
+  formGroup3.classList.add("form-group")
+  formGroup3.append(labelCorreo, inputGroup)
+
+  var columna3 = document.createElement("div")
+  columna3.classList.add("col-sm-4", "mb-3")
+  columna3.append(formGroup3)
+
+  var megaDiv = document.createElement("div")
+  megaDiv.classList.add("row")
+  megaDiv.append(columna1, columna2, columna3)
+
+  return megaDiv
+}
+   function remove_num_tiendas(rid) {
+     $('.removeclass'+rid).remove();
+   }
+
+</script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="js/scripts/corregirproveedor.js"></script>
+  </body>
+</html>
