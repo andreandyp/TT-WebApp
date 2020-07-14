@@ -18,6 +18,12 @@ const TypeModel = require("../models/Type");
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
     logging: false,
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
 });
 
 const Administrator = AdministratorModel(sequelize, Sequelize);
